@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אקדמיית הבר · קורס ברמנים בינלאומי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0D;
+  --bg-deep:#060608;
+  --surface:#17171C;
+  --surface-2:#33241615;
+  --line:rgba(127,229,143,.16);
+  --amber:#7FE58F;
+  --amber-deep:#3FAE5F;
+  --copper:#3FA968;
+  --cream:#F5F4F2;
+  --muted:#A5A19A;
+  --green:#5CC98A;
+  --red:#D9705E;
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{
+  font-family:'Heebo','Inter',sans-serif;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(127,229,143,.08), transparent 60%),
+    var(--bg);
+  color:var(--cream);
+  min-height:100vh;
+  line-height:1.7;
+}
+.wrap{max-width:680px;margin:0 auto;padding:0 18px 90px}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:20;
+  background:rgba(8,8,10,.85);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:680px;margin:0 auto;padding:12px 18px;
+  display:flex;align-items:center;gap:12px;
+}
+.brand{
+  font-family:'Inter','Heebo',sans-serif;font-weight:900;font-size:1.05rem;
+  color:var(--amber);letter-spacing:.02em;cursor:pointer;
+}
+.brand small{display:block;font-family:'Heebo';font-weight:300;font-size:.68rem;color:var(--muted);letter-spacing:.14em}
+.back-btn{
+  margin-inline-start:auto;
+  background:none;border:1px solid var(--line);color:var(--cream);
+  border-radius:999px;padding:6px 16px;font-family:'Heebo';font-size:.85rem;
+  cursor:pointer;display:none;
+}
+.back-btn:hover,.back-btn:focus-visible{border-color:var(--amber);color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+/* ---------- screens ---------- */
+.screen{display:none;animation:fadeIn .35s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- dashboard hero ---------- */
+.hero{padding:34px 0 10px;text-align:center}
+.hero .eyebrow{
+  font-size:.72rem;letter-spacing:.28em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:10px;
+}
+.hero h1{
+  font-family:'Inter','Heebo',sans-serif;font-weight:900;
+  font-size:clamp(1.9rem,7vw,2.6rem);line-height:1.25;color:var(--cream);
+}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero p{color:var(--muted);font-weight:300;margin-top:8px;font-size:.95rem}
+
+.progress-strip{
+  margin:22px 0 8px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:16px 18px;
+  display:flex;align-items:center;gap:16px;
+}
+.progress-strip .pct{
+  font-family:'Inter','Heebo',sans-serif;font-weight:900;font-size:1.7rem;color:var(--amber);
+  min-width:64px;text-align:center;
+}
+.progress-strip .bar-wrap{flex:1}
+.progress-strip .bar-label{font-size:.78rem;color:var(--muted);margin-bottom:6px}
+.bar{height:8px;background:var(--bg-deep);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber-deep),var(--amber));border-radius:99px;transition:width .6s ease}
+
+.continue-btn{
+  display:block;width:100%;margin:14px 0 4px;
+  background:linear-gradient(180deg,var(--amber),var(--amber-deep));
+  color:#0A1A0F;border:none;border-radius:var(--radius);
+  font-family:'Heebo';font-weight:700;font-size:1rem;padding:14px;cursor:pointer;
+}
+.continue-btn:hover{filter:brightness(1.06)}
+
+/* ---------- the backbar shelf (signature) ---------- */
+.shelf-title{
+  font-family:'Inter','Heebo',sans-serif;font-weight:700;font-size:1.15rem;
+  margin:30px 0 4px;color:var(--cream);
+}
+.shelf-sub{font-size:.82rem;color:var(--muted);margin-bottom:16px}
+.shelf{
+  position:relative;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
+  align-items:end;
+  padding:18px 14px 0;
+  background:linear-gradient(180deg,transparent 55%, rgba(127,229,143,.06));
+  border-bottom:6px solid #3A2A1A;
+  border-radius:4px;
+}
+.bottle-slot{display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:none;cursor:pointer;padding:0 0 10px;color:inherit;font-family:inherit}
+.bottle{
+  --fill:0%;
+  position:relative;width:min(46px,100%);height:110px;
+}
+.bottle .neck{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:14px;height:30px;background:rgba(243,233,214,.10);
+  border:1px solid var(--line);border-bottom:none;border-radius:5px 5px 0 0;
+}
+.bottle .body{
+  position:absolute;bottom:0;left:0;right:0;height:84px;
+  background:rgba(243,233,214,.06);
+  border:1px solid var(--line);border-radius:9px 9px 12px 12px;
+  overflow:hidden;
+}
+.bottle .liquid{
+  position:absolute;bottom:0;left:0;right:0;height:var(--fill);
+  background:linear-gradient(180deg,var(--amber) , var(--amber-deep));
+  opacity:.92;transition:height .8s ease;
+}
+.bottle .body::after{ /* glass shine */
+  content:"";position:absolute;top:6px;right:6px;width:5px;height:70%;
+  background:rgba(255,255,255,.10);border-radius:99px;
+}
+.bottle.locked .liquid{background:#4a3b2b;opacity:.5}
+.bottle .lock{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--muted);
+}
+.bottle-slot .b-name{font-size:.72rem;color:var(--cream);line-height:1.3;text-align:center;font-weight:500}
+.bottle-slot .b-pct{font-size:.68rem;color:var(--muted)}
+.bottle-slot:hover .b-name,.bottle-slot:focus-visible .b-name{color:var(--amber)}
+@media (max-width:430px){
+  .shelf{grid-template-columns:repeat(5,1fr);gap:6px}
+  .bottle{height:96px}.bottle .body{height:72px}
+}
+
+.sim-card{
+  margin-top:26px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px;
+  display:flex;align-items:center;gap:14px;
+}
+.sim-card .icon{font-size:1.9rem}
+.sim-card h3{font-family:'Inter','Heebo',sans-serif;font-size:1.05rem;color:var(--amber)}
+.sim-card p{font-size:.83rem;color:var(--muted)}
+.sim-card button{
+  margin-inline-start:auto;background:none;border:1px solid var(--amber);color:var(--amber);
+  border-radius:999px;padding:8px 18px;font-family:'Heebo';font-weight:500;cursor:pointer;white-space:nowrap;
+}
+.sim-card button:hover{background:var(--amber);color:#0A1A0F}
+
+/* ---------- module screen ---------- */
+.mod-head{padding:28px 0 14px}
+.mod-head .eyebrow{font-size:.72rem;letter-spacing:.24em;color:var(--amber);margin-bottom:6px}
+.mod-head h2{font-family:'Inter','Heebo',sans-serif;font-weight:900;font-size:1.6rem;line-height:1.3}
+.mod-head p{color:var(--muted);font-weight:300;font-size:.92rem;margin-top:6px}
+.lesson-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.lesson-item{
+  display:flex;align-items:center;gap:14px;text-align:start;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;cursor:pointer;color:var(--cream);font-family:'Heebo';width:100%;
+}
+.lesson-item:hover{border-color:var(--amber)}
+.lesson-item .check{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;color:var(--bg);
+}
+.lesson-item.done .check{background:var(--green);border-color:var(--green)}
+.lesson-item .li-title{font-weight:500;font-size:.95rem}
+.lesson-item .li-sub{font-size:.78rem;color:var(--muted)}
+.lesson-item.quiz-item{border-color:rgba(127,229,143,.4)}
+.lesson-item.quiz-item .check{border-style:dashed}
+.lesson-item.quiz-item.done .check{border-style:solid}
+.badge-score{margin-inline-start:auto;font-size:.78rem;color:var(--green);font-weight:700}
+
+/* ---------- lesson viewer ---------- */
+.lesson-body{padding:26px 0 10px}
+.lesson-body .eyebrow{font-size:.72rem;letter-spacing:.22em;color:var(--amber)}
+.lesson-body h2{font-family:'Inter','Heebo',sans-serif;font-weight:900;font-size:1.55rem;margin:6px 0 14px;line-height:1.3}
+.lesson-body h3{font-family:'Inter','Heebo',sans-serif;font-weight:700;font-size:1.12rem;color:var(--amber);margin:26px 0 8px}
+.lesson-body p{margin-bottom:14px;font-weight:300;font-size:.98rem;color:var(--cream)}
+.lesson-body strong{font-weight:700;color:var(--amber)}
+.media-ph{
+  margin:18px 0;border:1.5px dashed var(--line);border-radius:var(--radius);
+  background:var(--bg-deep);padding:34px 16px;text-align:center;color:var(--muted);
+  font-size:.85rem;
+}
+.media-ph span{display:block;font-size:1.6rem;margin-bottom:6px}
+.lesson-nav{display:flex;gap:10px;margin-top:26px}
+.btn{
+  flex:1;border-radius:var(--radius);padding:13px;font-family:'Heebo';font-weight:700;
+  font-size:.95rem;cursor:pointer;border:none;
+}
+.btn-primary{background:linear-gradient(180deg,var(--amber),var(--amber-deep));color:#0A1A0F}
+.btn-ghost{background:none;border:1px solid var(--line);color:var(--cream)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* ---------- recipe card ---------- */
+.recipe-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  margin:20px 0;overflow:hidden;
+}
+.recipe-card .rc-head{
+  padding:16px 18px 12px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(127,229,143,.07), transparent);
+}
+.recipe-card .rc-head h4{font-family:'Inter','Heebo',sans-serif;font-weight:900;font-size:1.2rem;color:var(--amber)}
+.recipe-card .rc-head .rc-en{font-size:.75rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.recipe-card .rc-story{padding:12px 18px 0;font-size:.85rem;color:var(--muted);font-weight:300}
+.rc-tabs{display:flex;border-bottom:1px solid var(--line);margin-top:12px}
+.rc-tab{
+  flex:1;background:none;border:none;color:var(--muted);font-family:'Heebo';
+  padding:10px 4px;font-size:.85rem;cursor:pointer;border-bottom:2px solid transparent;
+}
+.rc-tab[aria-selected="true"]{color:var(--amber);border-bottom-color:var(--amber);font-weight:700}
+.rc-panel{padding:16px 18px;display:none}
+.rc-panel.active{display:block}
+.ing-row{
+  display:flex;justify-content:space-between;gap:10px;
+  padding:8px 0;border-bottom:1px dashed rgba(127,229,143,.12);font-size:.92rem;
+}
+.ing-row:last-child{border-bottom:none}
+.ing-row .amt{color:var(--amber);font-weight:500;white-space:nowrap}
+.rc-panel ol{padding-inline-start:20px;font-size:.92rem;font-weight:300}
+.rc-panel ol li{margin-bottom:8px}
+.serve-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:.92rem}
+.serve-row .s-ic{font-size:1.2rem}
+.serve-row .s-label{font-size:.75rem;color:var(--muted);display:block}
+
+/* ---------- quiz ---------- */
+.quiz-head{padding:26px 0 8px;text-align:center}
+.quiz-head .eyebrow{font-size:.72rem;letter-spacing:.24em;color:var(--amber)}
+.quiz-head h2{font-family:'Inter','Heebo',sans-serif;font-weight:900;font-size:1.5rem;margin-top:4px}
+.q-dots{display:flex;gap:6px;justify-content:center;margin:14px 0 20px}
+.q-dots i{width:9px;height:9px;border-radius:50%;background:var(--surface);border:1px solid var(--line)}
+.q-dots i.now{background:var(--amber);border-color:var(--amber)}
+.q-dots i.ok{background:var(--green);border-color:var(--green)}
+.q-dots i.bad{background:var(--red);border-color:var(--red)}
+.q-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px}
+.q-card .q-text{font-weight:500;font-size:1.05rem;margin-bottom:16px;line-height:1.6}
+.q-opt{
+  display:block;width:100%;text-align:start;margin-bottom:10px;
+  background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;
+  color:var(--cream);font-family:'Heebo';font-size:.93rem;padding:13px 15px;cursor:pointer;
+}
+.q-opt:hover:not(:disabled){border-color:var(--amber)}
+.q-opt.correct{border-color:var(--green);background:rgba(143,191,107,.12)}
+.q-opt.wrong{border-color:var(--red);background:rgba(217,112,94,.12)}
+.q-opt:disabled{cursor:default}
+.q-feedback{
+  margin-top:14px;padding:13px 15px;border-radius:12px;font-size:.88rem;display:none;
+}
+.q-feedback.show{display:block}
+.q-feedback.good{background:rgba(143,191,107,.12);border:1px solid var(--green);color:var(--green)}
+.q-feedback.bad{background:rgba(217,112,94,.10);border:1px solid var(--red);color:var(--cream)}
+.q-feedback.bad b{color:var(--red)}
+.quiz-result{text-align:center;padding:40px 0}
+.quiz-result .big{font-family:'Inter','Heebo',sans-serif;font-weight:900;font-size:3rem}
+.quiz-result .big.pass{color:var(--green)}
+.quiz-result .big.fail{color:var(--red)}
+.quiz-result p{color:var(--muted);margin:8px 0 24px}
+
+/* ---------- simulator ---------- */
+.sim-head{padding:26px 0 6px;text-align:center}
+.sim-head h2{font-family:'Inter','Heebo',sans-serif;font-weight:900;font-size:1.5rem}
+.sim-target{
+  margin:14px 0 18px;text-align:center;background:var(--surface);
+  border:1px solid rgba(127,229,143,.4);border-radius:var(--radius);padding:16px;
+}
+.sim-target .t-label{font-size:.75rem;letter-spacing:.2em;color:var(--muted)}
+.sim-target .t-name{font-family:'Inter','Heebo',sans-serif;font-weight:900;font-size:1.5rem;color:var(--amber)}
+.sim-step-label{font-size:.8rem;color:var(--muted);margin-bottom:8px}
+.chip-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chip{
+  background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;
+  color:var(--cream);font-family:'Heebo';font-size:.9rem;padding:14px 10px;cursor:pointer;
+  text-align:center;
+}
+.chip .c-ic{display:block;font-size:1.5rem;margin-bottom:4px}
+.chip:hover{border-color:var(--amber)}
+.chip.picked{border-color:var(--amber);background:rgba(127,229,143,.12)}
+.chip.correct{border-color:var(--green);background:rgba(143,191,107,.12)}
+.chip.wrong{border-color:var(--red);background:rgba(217,112,94,.12)}
+.sim-actions{margin-top:16px}
+.sim-note{font-size:.8rem;color:var(--muted);text-align:center;margin-top:10px}
+
+/* ---------- pouring stage ---------- */
+.pour-row{background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.pour-top{display:flex;justify-content:space-between;font-size:.88rem;margin-bottom:8px}
+.p-name{font-weight:500}
+.p-target{color:var(--muted)}
+.pour-bar{position:relative;height:14px;background:#0E0905;border:1px solid var(--line);border-radius:99px}
+.p-fill{position:absolute;right:0;top:0;bottom:0;width:0;background:linear-gradient(270deg,var(--amber-deep),var(--amber));border-radius:99px;transition:width .08s linear}
+.p-fill.over{background:var(--red)}
+.p-mark{position:absolute;top:-3px;bottom:-3px;right:calc(66.7% - 1px);width:2px;background:var(--cream);opacity:.85;border-radius:2px}
+.pour-ctrl{display:flex;align-items:center;gap:8px;margin-top:10px}
+.p-cur{min-width:66px;font-size:.9rem;color:var(--amber);font-weight:700}
+.fine{width:40px;height:40px;border-radius:10px;background:none;border:1px solid var(--line);color:var(--cream);font-size:1.05rem;cursor:pointer;flex-shrink:0}
+.fine:hover{border-color:var(--amber);color:var(--amber)}
+.hold-btn{flex:1;padding:10px 6px;border-radius:10px;border:1px solid var(--amber);background:rgba(127,229,143,.10);color:var(--amber);font-family:'Heebo';font-weight:700;font-size:.88rem;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none}
+.hold-btn:active{background:var(--amber);color:#0A1A0F}
+.pour-row.locked .hold-btn,.pour-row.locked .fine{opacity:.35;pointer-events:none}
+.p-verdict{font-size:.8rem;margin-top:8px;display:none}
+.p-verdict.show{display:block}
+.p-verdict.good{color:var(--green)}
+.p-verdict.bad{color:var(--red)}
+
+/* ---------- graduated pour gauge (targets hidden) ---------- */
+.pour-bar.ticks{height:16px}
+.pour-bar.ticks::after{
+  content:"";position:absolute;inset:0;border-radius:99px;pointer-events:none;
+  background:repeating-linear-gradient(to left,
+    transparent, transparent calc(100%/var(--segs,6) - 1px),
+    rgba(243,233,214,.28) calc(100%/var(--segs,6) - 1px), rgba(243,233,214,.28) calc(100%/var(--segs,6)));
+}
+.p-scale{display:flex;justify-content:space-between;font-size:.66rem;color:var(--muted);margin-top:3px;padding:0 1px}
+.pour-row.exact{border-color:var(--green)}
+
+/* =================================================================
+   שכבת עיצוב מונפשת — נוזלים חיים, עומק, מיקרו-אינטראקציות
+================================================================= */
+/* אטמוספירה: הילות עשן-בר צפות */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:5;
+  background:
+    radial-gradient(420px 300px at 18% 22%, rgba(127,229,143,.05), transparent 70%),
+    radial-gradient(520px 340px at 82% 78%, rgba(63,174,95,.05), transparent 70%);
+  animation:ambient 16s ease-in-out infinite alternate;
+}
+@keyframes ambient{
+  from{transform:translate3d(-2%,-1%,0) scale(1)}
+  to{transform:translate3d(2%,2%,0) scale(1.06)}
+}
+
+/* עומק "פרו" לכרטיסים */
+.q-card,.recipe-card,.sim-card,.progress-strip,.sim-target,.lesson-item{
+  box-shadow:0 20px 45px -22px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.045);
+  transition:transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s, border-color .25s;
+}
+.lesson-item:hover,.sim-card:hover{transform:translateY(-3px);box-shadow:0 26px 50px -22px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.05)}
+button{transition:transform .15s cubic-bezier(.22,1,.36,1), filter .2s, background .2s, border-color .2s, color .2s}
+button:active{transform:scale(.96)}
+.btn-primary:hover,.continue-btn:hover{box-shadow:0 8px 26px -8px rgba(127,229,143,.55)}
+.brand{text-shadow:0 0 18px rgba(127,229,143,.0);animation:brandGlow 5s ease-in-out infinite}
+@keyframes brandGlow{0%,100%{text-shadow:0 0 8px rgba(127,229,143,.12)}50%{text-shadow:0 0 22px rgba(127,229,143,.38)}}
+
+/* פס התקדמות: ברק נוזלי נודד */
+.bar>i{position:relative;overflow:hidden}
+.bar>i::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%);
+  background-size:220% 100%;animation:sheen 2.6s ease-in-out infinite;
+}
+@keyframes sheen{from{background-position:200% 0}to{background-position:-100% 0}}
+
+/* ---------- בקבוקים חיים: גל עליון + בועות עולות ---------- */
+.bottle .liquid{overflow:visible}
+.bottle .liquid::before{ /* פני נוזל מתנועעים */
+  content:"";position:absolute;top:-5px;left:-25%;width:150%;height:10px;
+  background:var(--amber);border-radius:42% 46% 40% 44%;opacity:.95;
+  animation:wave 4.5s linear infinite;
+}
+.bottle.locked .liquid::before{background:#4a3b2b}
+@keyframes wave{to{transform:rotate(360deg)}}
+.bottle .liquid::after{ /* בועות */
+  content:"";position:absolute;inset:0;opacity:.55;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.5) 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(255,255,255,.35) 1px, transparent 1.4px);
+  background-size:11px 18px, 7px 13px;
+  background-position:2px 0, 5px 6px;
+  animation:bubbles 3.2s linear infinite;
+}
+@keyframes bubbles{to{background-position:2px -36px, 5px -20px}}
+.bottle-slot:hover .bottle{transform:rotate(-3deg) translateY(-4px)}
+.bottle{transition:transform .35s cubic-bezier(.22,1,.36,1)}
+
+/* ---------- מד המזיגה: נוזל חי וזרם מזיגה ---------- */
+.p-fill{position:absolute;overflow:hidden}
+.p-fill::after{
+  content:"";position:absolute;inset:0;opacity:.5;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);
+  background-size:240% 100%;animation:sheen 2.2s linear infinite;
+}
+.p-fill::before{ /* קצה נוזל מבעבע בחזית המזיגה */
+  content:"";position:absolute;top:0;bottom:0;left:-1px;width:6px;
+  background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.55) 1px, transparent 2px),
+             radial-gradient(circle at 50% 70%, rgba(255,255,255,.4) 1px, transparent 2px);
+  opacity:0;transition:opacity .2s;
+}
+.pour-row.pouring .p-fill::before{opacity:1}
+.pour-row.pouring .pour-bar{box-shadow:0 0 0 1px rgba(127,229,143,.45), 0 0 18px -4px rgba(127,229,143,.5)}
+.pour-row .pour-bar::before{ /* זרם מהבקבוק */
+  content:"";position:absolute;top:-24px;right:10px;width:3px;height:24px;border-radius:2px;
+  background:linear-gradient(to bottom, var(--amber), rgba(127,229,143,.15));
+  opacity:0;transform:scaleY(.2);transform-origin:top;transition:opacity .12s, transform .12s;
+}
+.pour-row.pouring .pour-bar::before{opacity:1;transform:scaleY(1);animation:stream .35s linear infinite}
+@keyframes stream{
+  0%{background-position:0 0;filter:brightness(1)}
+  50%{filter:brightness(1.25)}
+  100%{filter:brightness(1)}
+}
+.pour-row.pouring .hold-btn{background:var(--amber);color:#0A1A0F;box-shadow:0 0 20px -4px rgba(127,229,143,.7)}
+.pour-row{transition:border-color .3s, box-shadow .3s}
+.pour-row.exact{box-shadow:0 0 0 1px rgba(143,191,107,.35), 0 8px 22px -12px rgba(143,191,107,.4)}
+
+/* ---------- צ'יפים ואפשרויות: כניסה קופצנית ---------- */
+@keyframes popIn{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
+.chip,.q-opt,.pour-row{animation:popIn .45s cubic-bezier(.22,1,.36,1) both}
+.chip:nth-child(2),.q-opt:nth-of-type(2),.pour-row:nth-of-type(2){animation-delay:.06s}
+.chip:nth-child(3),.q-opt:nth-of-type(3),.pour-row:nth-of-type(3){animation-delay:.12s}
+.chip:nth-child(4),.q-opt:nth-of-type(4),.pour-row:nth-of-type(4){animation-delay:.18s}
+.chip:nth-child(5){animation-delay:.24s}
+.chip:nth-child(6){animation-delay:.3s}
+.chip:hover:not(:disabled){transform:translateY(-3px)}
+.q-feedback.show{animation:popIn .35s cubic-bezier(.22,1,.36,1) both}
+
+/* כרטיס מתכון: ברק זכוכית בריחוף */
+.recipe-card{position:relative;overflow:hidden}
+.recipe-card::before{
+  content:"";position:absolute;top:0;bottom:0;width:60px;left:-80px;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.06),transparent);
+  transform:skewX(-12deg);transition:left .7s ease;
+}
+.recipe-card:hover::before{left:calc(100% + 80px)}
+
+/* ---------- אייקוני SVG מקצועיים ---------- */
+svg.ic{width:1.15em;height:1.15em;vertical-align:-.22em;flex-shrink:0}
+.chip .c-ic svg.ic{width:27px;height:27px;color:var(--amber)}
+.serve-row .s-ic{color:var(--amber);display:flex;align-items:center}
+.serve-row .s-ic svg.ic{width:21px;height:21px}
+.media-ph span svg.ic{width:36px;height:36px;color:var(--muted)}
+.bottle .lock svg.ic{width:18px;height:18px}
+.sim-card .icon{color:var(--amber);display:flex;align-items:center}
+.sim-card .icon svg.ic{width:32px;height:32px}
+.hold-btn svg.ic{width:18px;height:18px;margin-inline-end:4px}
+.btn svg.ic{width:18px;height:18px;margin-inline-end:5px}
+
+/* מד מדידה: פעימת נוזל בהוספה בדידה (כפית/עלה/טיפה) */
+.pour-bar.splash .p-fill{animation:splash .32s ease}
+@keyframes splash{45%{filter:brightness(1.45) saturate(1.2)}}
+.p-unit{color:var(--muted);font-weight:400;font-size:.78rem}
+
+/* מסך ביניים: הכנת הקוקטייל */
+.prep-overlay{
+  position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;
+  background:rgba(8,8,10,.88);backdrop-filter:blur(8px);color:var(--amber);
+}
+.prep-overlay svg{width:70px;height:70px}
+.prep-overlay p{font-family:'Inter','Heebo',sans-serif;font-size:1.2rem;color:var(--cream)}
+
+/* =================================================================
+   שכבת עיצוב "סינמטית" — באנר, קרוסלות, אריחים
+================================================================= */
+h1,h2,h3,h4{letter-spacing:-.02em}
+.hero-banner{
+  position:relative;margin-top:22px;border-radius:20px;overflow:hidden;
+  min-height:300px;display:flex;align-items:flex-end;
+  border:1px solid var(--line);
+  box-shadow:0 34px 70px -34px rgba(0,0,0,.95);
+}
+.hb-bg{position:absolute;inset:0;background:
+  radial-gradient(620px 320px at 85% -5%, rgba(127,229,143,.24), transparent 62%),
+  radial-gradient(520px 340px at 8% 105%, rgba(63,169,104,.22), transparent 62%),
+  linear-gradient(180deg,#0D170F,#0A0A0C 72%);
+  animation:ambient 18s ease-in-out infinite alternate;}
+.hb-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,6,8,.88),transparent 58%)}
+.hb-content{position:relative;padding:28px 22px 24px;width:100%}
+.hb-content .eyebrow{font-size:.7rem;letter-spacing:.26em;color:var(--amber);text-transform:uppercase;font-weight:600}
+.hb-content h1{font-size:clamp(1.7rem,6.5vw,2.5rem);font-weight:900;line-height:1.18;margin:8px 0 4px;color:#fff}
+.hb-content p{color:var(--muted);font-size:.9rem}
+.hb-progress{display:flex;align-items:center;gap:12px;margin:16px 0}
+.hb-progress .bar{flex:1}
+.hb-progress span{font-weight:800;color:var(--amber);font-size:.95rem;min-width:46px}
+.play-btn{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(180deg,var(--amber),var(--amber-deep));
+  color:#0A1A0F;border:none;border-radius:12px;font-family:'Heebo','Inter',sans-serif;
+  font-weight:800;font-size:1rem;padding:13px 28px;cursor:pointer;
+}
+.play-btn svg{width:19px;height:19px;fill:currentColor;stroke:none;transform:scaleX(-1)}
+.play-btn:hover{transform:scale(1.045);box-shadow:0 12px 32px -8px rgba(127,229,143,.6)}
+
+.row-head{display:flex;align-items:center;gap:10px;margin:30px 0 12px}
+.row-head h2{font-size:1.15rem;font-weight:800}
+.row-en{font-size:.66rem;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.row-arrows{margin-inline-start:auto;display:flex;gap:6px}
+.row-arrows button{
+  width:34px;height:34px;border-radius:50%;background:var(--surface);
+  border:1px solid var(--line);color:var(--cream);cursor:pointer;font-size:1.05rem;line-height:1;
+}
+.row-arrows button:hover{border-color:var(--amber);color:var(--amber);transform:scale(1.08)}
+@media (max-width:560px){.row-arrows{display:none}}
+
+.hrow{
+  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x proximity;
+  padding:6px 2px 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.hrow::-webkit-scrollbar{display:none}
+.mod-tile,.rc-tile{
+  scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);
+  border-radius:16px;display:flex;flex-direction:column;align-items:center;gap:8px;
+  cursor:pointer;color:var(--cream);font-family:'Heebo','Inter',sans-serif;
+  transition:transform .3s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .3s;
+  box-shadow:0 18px 38px -22px rgba(0,0,0,.9);
+  animation:popIn .5s cubic-bezier(.22,1,.36,1) both;
+}
+.mod-tile:nth-child(2),.rc-tile:nth-child(2){animation-delay:.05s}
+.mod-tile:nth-child(3),.rc-tile:nth-child(3){animation-delay:.1s}
+.mod-tile:nth-child(4),.rc-tile:nth-child(4){animation-delay:.15s}
+.mod-tile:nth-child(5),.rc-tile:nth-child(5){animation-delay:.2s}
+.mod-tile:hover,.rc-tile:hover{transform:scale(1.05) translateY(-4px);border-color:rgba(127,229,143,.55);z-index:2;box-shadow:0 26px 50px -22px rgba(0,0,0,.95)}
+.mod-tile{min-width:160px;padding:16px 12px 14px}
+.mod-tile .m-name{font-size:.84rem;font-weight:700;text-align:center;line-height:1.35}
+.mod-tile .m-pct{font-size:.7rem;color:var(--muted)}
+.mod-tile .mini-bar{width:100%;height:5px;background:var(--bg-deep);border-radius:99px;overflow:hidden}
+.mod-tile .mini-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--copper),var(--amber));border-radius:99px;transition:width .6s ease}
+.rc-tile{min-width:140px;padding:20px 12px 15px;background:linear-gradient(180deg,rgba(127,229,143,.09),transparent 48%),var(--surface)}
+.rc-tile .t-ic{color:var(--amber)}
+.rc-tile .t-ic svg.ic{width:40px;height:40px;stroke-width:1.5}
+.rc-tile .t-name{font-weight:700;font-size:.9rem;text-align:center;line-height:1.3}
+.rc-tile .t-en{font-size:.64rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;text-align:center}
+
+.lesson-item:hover{transform:translateY(-3px) scale(1.012)}
+.bottle .liquid,.bottle .liquid::before{background:linear-gradient(180deg,var(--amber),var(--copper))}
+.bottle .liquid::before{background:var(--amber)}
+
+/* כפתור תרגול בתוך כרטיס מתכון */
+.rc-practice{padding:0 18px 16px}
+.sim-practice-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  background:rgba(127,229,143,.08);border:1px solid rgba(127,229,143,.45);color:var(--amber);
+  border-radius:12px;padding:12px;font-family:'Heebo','Inter',sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;
+}
+.sim-practice-btn:hover{background:var(--amber);color:#0A1A0F;box-shadow:0 10px 26px -10px rgba(127,229,143,.6)}
+.sim-practice-btn svg.ic{width:18px;height:18px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand" id="brandHome" role="button" tabindex="0">אקדמיית הבר<small>INTERNATIONAL BARTENDING · IBA</small></div>
+    <button class="back-btn" id="backBtn">→ חזרה</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- Dashboard -->
+  <section class="screen active" id="scr-dash">
+    <div class="hero-banner">
+      <div class="hb-bg"></div>
+      <div class="hb-content">
+        <div class="eyebrow" id="hbEyebrow">קורס ברמנים בינלאומי · IBA</div>
+        <h1 id="hbTitle">מאחורי כל בר גדול עומדת שיטה</h1>
+        <p id="hbSub"></p>
+        <div class="hb-progress"><div class="bar"><i id="dashBar"></i></div><span id="dashPct">0%</span></div>
+        <button class="play-btn" id="continueBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5-13-7.5z"/></svg><span id="cbText">התחל ללמוד</span></button>
+      </div>
+    </div>
+
+    <div class="row-head"><h2>מודולי הקורס</h2><div class="row-arrows"><button data-row="shelf" aria-label="גלילה">‹</button><button data-row="shelf" data-dir="1" aria-label="גלילה">›</button></div></div>
+    <div class="hrow" id="shelf"></div>
+
+    <div id="cocktailRows"></div>
+
+    <div class="sim-card">
+      <div class="icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16L12 13v6"/><path d="M8 21h8"/><circle cx="9.5" cy="6.8" r="1.1"/></svg></div>
+      <div>
+        <h3>סימולטור קוקטיילים</h3>
+        <p>כוס, קרח, רכיבים, מדידה מדויקת וטכניקה — עם חזרה חכמה על מה שקשה לכם.</p>
+      </div>
+      <button id="simOpenBtn">לתרגול</button>
+    </div>
+  </section>
+
+  <!-- Module -->
+  <section class="screen" id="scr-module">
+    <div class="mod-head">
+      <div class="eyebrow" id="modEyebrow"></div>
+      <h2 id="modTitle"></h2>
+      <p id="modDesc"></p>
+    </div>
+    <div class="lesson-list" id="lessonList"></div>
+  </section>
+
+  <!-- Lesson -->
+  <section class="screen" id="scr-lesson">
+    <div class="lesson-body" id="lessonBody"></div>
+    <div class="lesson-nav">
+      <button class="btn btn-ghost" id="lessonBackBtn">לרשימת השיעורים</button>
+      <button class="btn btn-primary" id="lessonDoneBtn">סיימתי · לשיעור הבא</button>
+    </div>
+  </section>
+
+  <!-- Quiz -->
+  <section class="screen" id="scr-quiz">
+    <div class="quiz-head">
+      <div class="eyebrow">מבחן מודול</div>
+      <h2 id="quizTitle"></h2>
+    </div>
+    <div class="q-dots" id="qDots"></div>
+    <div id="quizArea"></div>
+  </section>
+
+  <!-- Simulator -->
+  <section class="screen" id="scr-sim">
+    <div class="sim-head">
+      <h2>סימולטור קוקטיילים</h2>
+    </div>
+    <div class="sim-target">
+      <div class="t-label">הלקוח הזמין</div>
+      <div class="t-name" id="simTargetName"></div>
+    </div>
+    <div id="simArea"></div>
+  </section>
+</main>
+
+<script>
+/* =========================================================
+   DATA — הסילבוס, מתכוני IBA, מבחנים
+========================================================= */
+const RECIPES = {
+  negroni:{name:"נגרוני",en:"Negroni",cat:"The Unforgettables",
+    story:"נולד בפירנצה ב-1919, כשהרוזן קמילו נגרוני ביקש לחזק את האמריקנו שלו בג'ין במקום סודה. שלושה רכיבים, יחס שווה — ואחד הקוקטיילים המזוהים ביותר עם האפריטיבו האיטלקי.",
+    ings:[["ג'ין","30 מ״ל · 1 oz"],["קמפרי","30 מ״ל · 1 oz"],["ורמוט מתוק (רוסו)","30 מ״ל · 1 oz"]],
+    method:["מלאו כוס רוקס בקוביות קרח גדולות.","מזגו את שלושת הרכיבים ישירות לכוס (Build).","ערבבו בעדינות עם כפית בר כ-10 שניות.","קשטו בפלח או קליפת תפוז."],
+    glass:"כוס רוקס (Old Fashioned)",ice:"קוביות גדולות",garnish:"פלח / קליפת תפוז",technique:"בנייה וערבוב (Build & Stir)"},
+  martini:{name:"מרטיני יבש",en:"Dry Martini",cat:"The Unforgettables",
+    story:"מלך הקוקטיילים הקלאסיים. היחס בין הג'ין לוורמוט הוא ויכוח בן מאה שנה — ככל שפחות ורמוט, כך המרטיני 'יבש' יותר.",
+    ings:[["ג'ין","60 מ״ל · 2 oz"],["ורמוט יבש","10 מ״ל · ⅓ oz"]],
+    method:["מלאו כוס ערבוב (Mixing Glass) בקרח.","מזגו את הרכיבים וערבבו (Stir) כ-30 שניות.","סננו לכוס מרטיני צוננת (Strain).","קשטו בטוויסט לימון או זית."],
+    glass:"כוס מרטיני (קוקטייל)",ice:"ללא קרח בהגשה",garnish:"טוויסט לימון או זית",technique:"ערבוב וסינון (Stir & Strain)"},
+  oldfashioned:{name:"אולד פאשנד",en:"Old Fashioned",cat:"The Unforgettables",
+    story:"אחד הקוקטיילים המתועדים הראשונים בהיסטוריה (סוף המאה ה-19): אלכוהול, סוכר, ביטרס ומים — ההגדרה המקורית של 'קוקטייל'.",
+    ings:[["וויסקי בורבון או ריי","45 מ״ל · 1.5 oz"],["קוביית סוכר","1 יח'"],["אנגוסטורה ביטרס","3 טיפות"],["מים / סודה","מעט (Splash)"]],
+    method:["הניחו קוביית סוכר בכוס, הוסיפו ביטרס ומעט מים.","כתשו (Muddle) עד המסת הסוכר.","הוסיפו קרח, מזגו את הוויסקי וערבבו.","קשטו בקליפת תפוז ודובדבן."],
+    glass:"כוס רוקס (Old Fashioned)",ice:"קובייה גדולה",garnish:"קליפת תפוז + דובדבן",technique:"כתישה וערבוב (Muddle & Stir)"},
+  daiquiri:{name:"דאקירי",en:"Daiquiri",cat:"The Unforgettables",
+    story:"קלאסיקה קובנית משנות ה-1900. שלושה רכיבים בלבד — האיזון בין החמוץ למתוק הוא המבחן האמיתי של כל ברמן.",
+    ings:[["רום לבן","60 מ״ל · 2 oz"],["מיץ ליים טרי","20 מ״ל · ⅔ oz"],["סירופ סוכר","10 מ״ל · ⅓ oz"]],
+    method:["מזגו את כל הרכיבים לשייקר עם קרח.","נערו היטב 10-15 שניות (Shake).","סננו סינון כפול לכוס קופה צוננת.","קשטו בפלח ליים."],
+    glass:"כוס קופה / קוקטייל",ice:"ללא קרח בהגשה",garnish:"פלח ליים",technique:"ניעור וסינון (Shake & Strain)"},
+  whiskeysour:{name:"וויסקי סאוור",en:"Whiskey Sour",cat:"The Unforgettables",
+    story:"אב-הטיפוס של משפחת הסאוור: חזק, חמוץ ומתוק בהרמוניה. תוספת חלבון ביצה יוצרת מרקם קטיפתי (Boston Sour).",
+    ings:[["וויסקי בורבון","45 מ״ל · 1.5 oz"],["מיץ לימון טרי","25 מ״ל · ~1 oz"],["סירופ סוכר","20 מ״ל · ⅔ oz"],["חלבון ביצה (אופציונלי)","20 מ״ל"]],
+    method:["מזגו את הרכיבים לשייקר.","עם חלבון: נערו תחילה ללא קרח (Dry Shake).","הוסיפו קרח ונערו שוב היטב.","סננו לכוס רוקס עם קרח וקשטו בתפוז ודובדבן."],
+    glass:"כוס רוקס",ice:"קוביות",garnish:"פלח תפוז + דובדבן",technique:"ניעור וסינון (Shake & Strain)"},
+  margarita:{name:"מרגריטה",en:"Margarita",cat:"Contemporary Classics",
+    story:"הקוקטייל המקסיקני המפורסם בעולם. שולי המלח אינם קישוט בלבד — הם מאזנים את החמיצות ומעצימים את טעם הטקילה.",
+    ings:[["טקילה","50 מ״ל · 1⅔ oz"],["טריפל סק / קואנטרו","20 מ״ל · ⅔ oz"],["מיץ ליים טרי","15 מ״ל · ½ oz"]],
+    method:["הרטיבו את שולי הכוס בליים וטבלו במלח.","מזגו את הרכיבים לשייקר עם קרח.","נערו היטב וסננו לכוס.","קשטו בפלח ליים."],
+    glass:"כוס מרגריטה / קופה",ice:"ללא / קוביות (לפי בקשה)",garnish:"שולי מלח + פלח ליים",technique:"ניעור וסינון (Shake & Strain)"},
+  mojito:{name:"מוחיטו",en:"Mojito",cat:"Contemporary Classics",
+    story:"סמלה של הוואנה. הסוד: לכתוש את הנענע בעדינות בלבד — כתישה אגרסיבית משחררת מרירות מהעלים.",
+    ings:[["רום לבן","45 מ״ל · 1.5 oz"],["מיץ ליים טרי","20 מ״ל · ⅔ oz"],["סוכר","2 כפיות"],["עלי נענע","6 עלים"],["סודה","להשלמה (Top)"]],
+    method:["כתשו בעדינות נענע, סוכר וליים בתחתית הכוס.","מלאו את הכוס בקרח כתוש.","מזגו את הרום והשלימו בסודה.","ערבבו קלות וקשטו בענף נענע ופלח ליים."],
+    glass:"כוס הייבול",ice:"קרח כתוש",garnish:"ענף נענע + ליים",technique:"כתישה ובנייה (Muddle & Build)"},
+  cosmopolitan:{name:"קוסמופוליטן",en:"Cosmopolitan",cat:"Contemporary Classics",
+    story:"אייקון שנות ה-90 מניו יורק. הצבע הוורדרד מגיע ממיץ החמוציות — שצריך להיות נוכח אך לא שולט.",
+    ings:[["וודקה סיטרון","40 מ״ל · 1⅓ oz"],["קואנטרו","15 מ״ל · ½ oz"],["מיץ ליים טרי","15 מ״ל · ½ oz"],["מיץ חמוציות","30 מ״ל · 1 oz"]],
+    method:["מזגו את כל הרכיבים לשייקר עם קרח.","נערו היטב וסננו לכוס מרטיני צוננת.","קשטו בטוויסט לימון."],
+    glass:"כוס מרטיני",ice:"ללא קרח בהגשה",garnish:"טוויסט לימון",technique:"ניעור וסינון (Shake & Strain)"},
+  espressomartini:{name:"אספרסו מרטיני",en:"Espresso Martini",cat:"Contemporary Classics",
+    story:"נולד בלונדון בשנות ה-80 מידי הברמן דיק ברדסל. שכבת הקצף (Crema) והשלושה פולי קפה הם חתימת ההגשה.",
+    ings:[["וודקה","50 מ״ל · 1⅔ oz"],["ליקר קפה","30 מ״ל · 1 oz"],["סירופ סוכר","10 מ״ל · ⅓ oz"],["אספרסו טרי","שוט אחד (30 מ״ל)"]],
+    method:["מזגו את כל הרכיבים לשייקר עם הרבה קרח.","נערו חזק במיוחד — הניעור יוצר את הקצף.","סננו סינון כפול לכוס מרטיני צוננת.","קשטו ב-3 פולי קפה."],
+    glass:"כוס מרטיני",ice:"ללא קרח בהגשה",garnish:"3 פולי קפה",technique:"ניעור וסינון (Shake & Strain)"},
+  tommys:{name:"טומיז מרגריטה",en:"Tommy's Margarita",cat:"New Era Drinks",
+    story:"גרסתו של חוליו ברמחו מסן פרנסיסקו: מחליפים את הטריפל סק בסירופ אגבה — וכל תשומת הלב עוברת לטקילה עצמה.",
+    ings:[["טקילה 100% אגבה","45 מ״ל · 1.5 oz"],["מיץ ליים טרי","15 מ״ל · ½ oz"],["סירופ אגבה","15 מ״ל · ½ oz"]],
+    method:["מזגו את הרכיבים לשייקר עם קרח.","נערו היטב.","סננו לכוס רוקס עם קרח טרי.","קשטו בפלח ליים."],
+    glass:"כוס רוקס",ice:"קוביות",garnish:"פלח ליים",technique:"ניעור וסינון (Shake & Strain)"},
+  penicillin:{name:"פניצילין",en:"Penicillin",cat:"New Era Drinks",
+    story:"מודרן קלאסיק מניו יורק (סם רוס, 2005): סקוץ', דבש, ג'ינג'ר ולימון — עם 'ציפוי' סקוץ' מעושן מעל שמשנה את כל החוויה.",
+    ings:[["וויסקי סקוץ' בלנדד","60 מ״ל · 2 oz"],["מיץ לימון טרי","22 מ״ל · ¾ oz"],["סירופ דבש-ג'ינג'ר","22 מ״ל · ¾ oz"],["סקוץ' אילאיי מעושן","7 מ״ל (Float)"]],
+    method:["נערו את הבלנדד, הלימון והסירופ עם קרח.","סננו לכוס רוקס עם קובייה גדולה.","מזגו בעדינות את הסקוץ' המעושן מעל (Float).","קשטו בג'ינג'ר מסוכר."],
+    glass:"כוס רוקס",ice:"קובייה גדולה",garnish:"ג'ינג'ר מסוכר",technique:"ניעור + Float"},
+  paperplane:{name:"פייפר פליין",en:"Paper Plane",cat:"New Era Drinks",
+    story:"עוד יצירה של סם רוס (2008): ארבעה רכיבים ביחס שווה לחלוטין — קל לזכור, קשה לשכוח.",
+    ings:[["בורבון","22 מ״ל · ¾ oz"],["אפרול","22 מ״ל · ¾ oz"],["אמארו נונינו","22 מ״ל · ¾ oz"],["מיץ לימון טרי","22 מ״ל · ¾ oz"]],
+    method:["מזגו את כל הרכיבים לשייקר עם קרח.","נערו היטב.","סננו סינון כפול לכוס קופה צוננת.","מוגש ללא קישוט (או מטוס נייר קטן)."],
+    glass:"כוס קופה",ice:"ללא קרח בהגשה",garnish:"ללא / מטוס נייר",technique:"ניעור וסינון (Shake & Strain)"}
+};
+
+const MODULES = [
+{id:"m1",short:"יסודות",title:"מבוא ועולם הבר",subtitle:"Bartending Basics",
+ desc:"היסטוריה, אתיקה, עמדת העבודה, הציוד והכוסות — הבסיס שכל ברמן נבנה עליו.",
+ lessons:[
+ {t:"היסטוריה ואתיקה מקצועית",sub:"מהסלון האמריקאי ועד הבר המודרני",html:`
+   <h3>מאיפה הגענו</h3>
+   <p>מקצוע הברמנות המודרני נולד במאה ה-19 בארה"ב, כשג'רי תומאס — "אבי המיקסולוגיה" — פרסם ב-1862 את ספר הקוקטיילים הראשון בהיסטוריה. תקופת היוקרה של תחילת המאה ה-20, ה-Golden Age, עוצבה דווקא בשל היובש: ברמנים אמריקאים שנמלטו מחוקי היובש (1920–1933) הפיצו את המקצוע לאירופה ולעולם.</p>
+   <p>ב-1951 הוקם ארגון <strong>IBA — International Bartenders Association</strong>, הגוף שמאגד עד היום את איגודי הברמנים בעולם, מגדיר את רשימת הקוקטיילים הרשמית ומקיים את אליפות העולם בברמנות.</p>
+   <div class="media-ph"><span>🎬</span>כאן ישולב סרטון: "תולדות הברמנות ב-5 דקות"</div>
+   <h3>אתיקה מאחורי הבר</h3>
+   <p>ברמן מקצועי הוא קודם כל מארח: דייקנות במתכונים, יושרה במזיגה (לא "להעשיר" ולא "לדלל"), דיסקרטיות מול לקוחות, והקפדה על שתייה אחראית. הבר הוא במה — וההתנהגות שלך היא חלק מהמופע.</p>`},
+ {t:"מבנה הבר ו-Mise en Place",sub:"עמדת עבודה מסודרת = שירות מהיר",html:`
+   <h3>אנטומיה של בר</h3>
+   <p>הבר מחולק לשלושה אזורים: <strong>Front Bar</strong> — הדלפק והלקוחות; <strong>Back Bar</strong> — מדפי התצוגה והבקבוקים היוקרתיים; ו-<strong>Under Bar</strong> — אזור העבודה התחתון עם תחנת הקרח (Ice Well), בקבוקי ה-Speed Rail והמקרר.</p>
+   <h3>Mise en Place — "הכול במקומו"</h3>
+   <p>מונח שהושאל מהמטבח המקצועי: לפני פתיחת המשמרת, כל דבר במקומו הקבוע. ג'וסים סחוטים טריים, קישוטים חתוכים, קרח מלא, כלים נקיים ובקבוקים מסודרים לפי סדר שימוש. ברמן שמחפש בקבוק באמצע שירות — מאבד זמן, קצב ואמון.</p>
+   <div class="media-ph"><span>📷</span>כאן תשולב תמונה: סידור עמדת עבודה תקני</div>
+   <h3>היגיינה</h3>
+   <p>כלל הזהב: <strong>קרח הוא מזון</strong>. נוגעים בו אך ורק בכף קרח (Scoop) — לעולם לא בכוס ולא ביד. משטחים מנוגבים בין הכנות, מטליות נפרדות לדלפק ולכלים, ושטיפת ידיים תדירה. כוס שנסדקה נזרקת מיד — יחד עם כל הקרח ב-Well אם נפלה לתוכו.</p>`},
+ {t:"ציוד הבר המקצועי",sub:"שייקרים, ג'יגרים, סטריינרים ועוד",html:`
+   <h3>כלי היסוד</h3>
+   <p><strong>שייקר בוסטון</strong> — שני חלקים (טין + טין/כוס), הסטנדרט המקצועי; <strong>שייקר קובלר</strong> — שלושה חלקים עם מסננת מובנית, ידידותי למתחילים. <strong>ג'יגר (Jigger)</strong> — כלי המדידה הכפול (לרוב 30/60 מ״ל) שמבטיח דיוק ועקביות. <strong>כפית בר (Bar Spoon)</strong> — ידית ספירלית ארוכה לערבוב ולמזיגת שכבות.</p>
+   <p><strong>סטריינר הות'ורן</strong> (עם הקפיץ) לסינון מהשייקר; <strong>ג'וליפ סטריינר</strong> לכוס הערבוב; ו<strong>מסננת רשת עדינה</strong> לסינון כפול (Double Strain) שמונע רסיסי קרח ועלים בכוס. נוסיף: מאדלר לכתישה, מסחטת הדרים, סכין קישוטים וקולפן (Peeler).</p>
+   <div class="media-ph"><span>📷</span>כאן תשולב תמונה: ערכת כלים מקצועית מלאה</div>`},
+ {t:"סוגי כוסות והתאמתן",sub:"הכוס היא חלק מהמתכון",html:`
+   <h3>הכוסות המרכזיות</h3>
+   <p><strong>רוקס / Old Fashioned</strong> — נמוכה ורחבה, למשקאות על קרח (נגרוני, אולד פאשנד). <strong>הייבול / קולינס</strong> — גבוהה וצרה, למשקאות ארוכים עם סודה (מוחיטו, ג'ין טוניק). <strong>מרטיני</strong> — משולשת על רגל, לקוקטיילים מסוננים ללא קרח. <strong>קופה (Coupe)</strong> — עגולה ואלגנטית, האלטרנטיבה המודרנית למרטיני (דאקירי, פייפר פליין).</p>
+   <p>הכלל: משקאות <strong>ללא קרח מוגשים בכוס על רגל</strong> — כדי שחום היד לא יחמם את המשקה. הכוס תמיד צוננת מראש (Chilled): במקפיא או במילוי קרח ומים בזמן ההכנה.</p>
+   <div class="media-ph"><span>📷</span>כאן תשולב אינפוגרפיקה: מפת כוסות ומשקאות</div>`}
+ ],
+ quiz:[
+ {q:"מה משמעות המונח Mise en Place?",o:["טכניקת ניעור צרפתית","סידור מוקדם ומלא של עמדת העבודה לפני השירות","שיטת תמחור משקאות","סוג של כוס קוקטייל"],a:1,exp:"Mise en Place ('הכול במקומו') הוא עקרון הסידור המוקדם: ג'וסים, קישוטים, קרח וכלים — הכול מוכן במקומו הקבוע לפני פתיחת המשמרת."},
+ {q:"למה משמש הג'יגר (Jigger)?",o:["לכתישת נענע וסוכר","לסינון קרח מהשייקר","למדידה מדויקת של כמויות נוזלים","לקילוף הדרים לקישוט"],a:2,exp:"הג'יגר הוא כלי המדידה הכפול של הברמן (לרוב 30/60 מ״ל) — הוא שמבטיח שכל קוקטייל ייצא זהה ומאוזן."},
+ {q:"איזו כוס מתאימה למשקה מסונן המוגש ללא קרח, כמו מרטיני יבש?",o:["כוס הייבול","כוס רוקס","כוס שוט","כוס על רגל (מרטיני/קופה) צוננת"],a:3,exp:"משקה ללא קרח מוגש בכוס על רגל כדי שחום היד לא יחמם אותו — והכוס תמיד צוננת מראש."},
+ {q:"מהו תפקידו של הסטריינר (Strainer)?",o:["לסנן קרח ומוצקים בזמן המזיגה לכוס ההגשה","למדוד כמויות אלכוהול","לצנן את הכוס","לפתוח בקבוקי יין"],a:0,exp:"הסטריינר (הות'ורן או ג'וליפ) עוצר את הקרח והמוצקים כשמוזגים מהשייקר או מכוס הערבוב אל כוס ההגשה."},
+ {q:"מהו כלל ההיגיינה הבסיסי ביחס לקרח?",o:["מותר לגרוף קרח עם הכוס אם היא נקייה","קרח נחשב מזון — נוגעים בו אך ורק עם כף קרח (Scoop)","קרח אינו דורש טיפול מיוחד כי הוא קפוא","משתמשים באותו קרח פעמיים לחיסכון"],a:1,exp:"קרח הוא מזון לכל דבר. גריפה בכוס מסוכנת (סכנת שבר בקרח) ואסורה — תמיד עם Scoop ייעודי."}
+ ]},
+
+{id:"m2",short:"אלכוהול",title:"תורת האלכוהול",subtitle:"Spiritology",
+ desc:"מתסיסה ועד זיקוק: ששת תזקיקי הבסיס, ליקרים, יינות, אפריטיפים ובועות.",
+ lessons:[
+ {t:"תסיסה מול זיקוק",sub:"איך נולד אלכוהול",html:`
+   <h3>תסיסה (Fermentation)</h3>
+   <p>שמרים אוכלים סוכר ומייצרים אלכוהול ופחמן דו-חמצני. זהו התהליך שיוצר יין (מענבים) ובירה (מדגנים) — והוא מוגבל טבעית לכ-15% אלכוהול, כי מעבר לכך השמרים מתים.</p>
+   <h3>זיקוק (Distillation)</h3>
+   <p>כדי להגיע ל-40% ומעלה, מחממים נוזל מותסס: האלכוהול רותח לפני המים (78°C לעומת 100°C), האדים נאספים ומעובים בחזרה לנוזל מרוכז. <strong>התסיסה יוצרת את האלכוהול — הזיקוק מרכז אותו.</strong> כל תזקיק בעולם מתחיל מנוזל מותסס כלשהו.</p>
+   <div class="media-ph"><span>🎬</span>כאן ישולב סרטון: מסע בתוך מזקקה</div>`},
+ {t:"ששת תזקיקי הבסיס",sub:"וודקה · ג'ין · רום · טקילה · וויסקי · ברנדי",html:`
+   <h3>מה עושה כל תזקיק</h3>
+   <p><strong>וודקה</strong> — מזוקקת מדגנים או תפוחי אדמה לניקיון מרבי; קנבס נייטרלי לקוקטיילים. <strong>ג'ין</strong> — תזקיק נייטרלי שהושרה בצמחי תיבול, כשעל פי חוק חייב לככב בו ערער (Juniper). <strong>רום</strong> — מזוקק מקנה סוכר או מולסה, מהקריביים; לבן לקוקטיילים רעננים, כהה ומיושן ללגימה.</p>
+   <p><strong>טקילה</strong> — אך ורק מאגבה כחולה במקסיקו; חפשו על התווית "100% Agave". <strong>וויסקי</strong> — דגנים מותססים שמזוקקים ומיושנים בחביות עץ, שמעניקות לו את הצבע הענברי ואת רוב הטעם: סקוץ' (סקוטלנד), בורבון (ארה"ב, תירס), אירי ויפני. <strong>ברנדי</strong> — זיקוק של יין או פרי מותסס; קוניאק הוא ברנדי מאזור מוגן בצרפת.</p>
+   <div class="media-ph"><span>📷</span>כאן תשולב טבלה ויזואלית: ששת התזקיקים, חומרי הגלם והמדינות</div>`},
+ {t:"ליקרים, יינות ואפריטיפים",sub:"ארון התבלינים של הבר",html:`
+   <h3>ליקרים</h3>
+   <p>ליקר = תזקיק + סוכר + טעם (פרי, עשבים, קפה, שקדים). דוגמאות שחוזרות בכל בר: קואנטרו/טריפל סק (תפוז), קמפרי ואפרול (מרים איטלקיים), ליקר קפה ואמארטו.</p>
+   <h3>יינות מחוזקים ואפריטיפים</h3>
+   <p><strong>ורמוט</strong> — יין מחוזק ומתובל, בגרסה יבשה (למרטיני) ומתוקה/רוסו (לנגרוני). חשוב: ורמוט הוא יין — לאחר פתיחה נשמר בקירור. <strong>אפריטיף</strong> מוגש לפני הארוחה לעורר תיאבון (קמפרי, ורמוט, שרי יבש); <strong>דיז'סטיף</strong> נלגם אחריה לסיוע בעיכול (אמארו, קוניאק, פורט).</p>
+   <div class="media-ph"><span>📷</span>כאן תשולב תמונה: מדף האפריטיפים האיטלקי</div>`},
+ {t:"בירות ומבעבעים",sub:"לאגר, אייל, פרוסקו ושמפניה",html:`
+   <h3>בירה בשתי משפחות</h3>
+   <p><strong>לאגר</strong> — תסיסה תחתית בקור: נקייה, פריכה וקלילה (פילזנר). <strong>אייל</strong> — תסיסה עילית בחום: פירותית ועשירה (פייל אייל, IPA, סטאוט). מזיגה נכונה: כוס בזווית 45°, יישור לקראת הסוף לשכבת קצף של כשתי אצבעות.</p>
+   <h3>מבעבעים</h3>
+   <p><strong>שמפניה</strong> — רק מחבל שמפיין בצרפת, בתסיסה שנייה בבקבוק; <strong>פרוסקו</strong> — איטלקי, תסיסה שנייה במיכל, קליל ונגיש; <strong>קאווה</strong> — הגרסה הספרדית. בקוקטיילים (ספריץ, מימוזה) המבעבע תמיד נמזג אחרון ובעדינות לשמירת הבועות.</p>
+   <div class="media-ph"><span>🎬</span>כאן ישולב סרטון: פתיחת בקבוק מבעבע בבטחה</div>`}
+ ],
+ quiz:[
+ {q:"מה היחס הנכון בין תסיסה לזיקוק?",o:["הזיקוק יוצר את האלכוהול והתסיסה מרכזת אותו","התסיסה יוצרת את האלכוהול והזיקוק מרכז אותו","שניהם תהליכים זהים בשמות שונים","זיקוק נחוץ רק ליין"],a:1,exp:"שמרים מייצרים אלכוהול בתסיסה (עד ~15%); הזיקוק מנצל את נקודת הרתיחה הנמוכה של אלכוהול כדי להפריד ולרכז אותו."},
+ {q:"ממה מיוצרת טקילה?",o:["קנה סוכר","תירס","אגבה כחולה","תפוחי אדמה"],a:2,exp:"טקילה מיוצרת אך ורק מאגבה כחולה באזורים מוגנים במקסיקו. 'Tequila 100% Agave' הוא סימן האיכות שמחפשים."},
+ {q:"איזה תזקיק מקבל את צבעו הענברי ורוב טעמו מיושן בחביות עץ?",o:["וודקה","ג'ין","וויסקי","טריפל סק"],a:2,exp:"וויסקי מיושן בחביות עץ (אלון), שמעניקות לו צבע ענברי וטעמי וניל, קרמל ועשן — לעיתים רוב הטעם הסופי."},
+ {q:"מתי מוגש אפריטיף?",o:["לפני הארוחה, לעורר תיאבון","אחרי הארוחה, לסיוע בעיכול","רק עם קינוח","בכל שעה, זה שם כללי לליקר"],a:0,exp:"אפריטיף (קמפרי, ורמוט, שרי יבש) פותח את הארוחה ומעורר תיאבון; הדיז'סטיף (אמארו, קוניאק) חותם אותה."},
+ {q:"ממה מיוצר רום?",o:["ענבים","קנה סוכר או מולסה","שעורה מומלטת","אורז"],a:1,exp:"רום מזוקק מקנה סוכר או ממולסה (תוצר לוואי של ייצור סוכר), ומקורו ההיסטורי באיים הקריביים."}
+ ]},
+
+{id:"m3",short:"טכניקות",title:"טכניקות מיקסולוגיה",subtitle:"Mixology Techniques",
+ desc:"בנייה, ניעור, ערבוב, כתישה ובלנדר — מתי, למה ואיך. ולצידן: מזיגה מדויקת, סירופים וקישוטים.",
+ lessons:[
+ {t:"חמש שיטות ההכנה",sub:"Build · Shake · Stir · Muddle · Blend",html:`
+   <h3>הכלל שמכריע הכול</h3>
+   <p><strong>נוער (Shake)</strong> כל קוקטייל שמכיל מיצים, מוצרי חלב, ביצה או סירופים סמיכים — הניעור מקרר, מדלל ומאחד רכיבים בצפיפויות שונות (מרגריטה, דאקירי, וויסקי סאוור). <strong>מערבב (Stir)</strong> כשכל הרכיבים אלכוהוליים ושקופים — לשמירה על מרקם משיי וצלול (מרטיני, נגרוני, אולד פאשנד).</p>
+   <p><strong>בנייה (Build)</strong> — מזיגה ישירה לכוס ההגשה על קרח (ג'ין טוניק, ספריץ). <strong>כתישה (Muddle)</strong> — מעיכה עדינה של רכיבים טריים בתחתית הכוס לשחרור שמנים ומיצים (מוחיטו, קייפרינייה). <strong>בלנדר (Blend)</strong> — לקוקטיילים קפואים עם קרח כתוש (פינה קולדה, פרוזן מרגריטה).</p>
+   <div class="media-ph"><span>🎬</span>כאן ישולבו 5 סרטוני הדגמה — סרטון לכל טכניקה</div>
+   <p>ניעור נכון: 10–15 שניות נמרצות, השייקר צונן ומכוסה כפור. ערבוב נכון: כ-30 שניות בתנועה חלקה, כף הבר צמודה לדופן.</p>`},
+ {t:"מזיגה מדויקת",sub:"Jigger מול Free Pouring",html:`
+   <h3>ג'יגר: הדיוק כברירת מחדל</h3>
+   <p>מזיגה בג'יגר מבטיחה עקביות מוחלטת בין כוס לכוס ושליטה בעלויות. במדידה נכונה ממלאים עד קו השפה בדיוק — לא "בערך".</p>
+   <h3>Free Pouring: מהירות עם משמעת</h3>
+   <p>מזיגה חופשית עם פקק מזיגה (Pourer) לפי ספירה: בקצב תקני, כל ספירה ("one-and") שווה כ-15 מ״ל, כך ש-<strong>ארבע ספירות = 60 מ״ל</strong>. השיטה מהירה יותר אך דורשת אימון קבוע ובדיקות דיוק (Pour Test) עם ג'יגר וכוס מדידה. הכלל המקצועי: לומדים לדייק עם ג'יגר — ורק אז מרוויחים מהירות.</p>
+   <div class="media-ph"><span>🎬</span>כאן ישולב סרטון: תרגול ספירת מזיגה עם בקבוק אימון</div>`},
+ {t:"סירופים, סאוור וקישוטים",sub:"המרכיבים שמכינים לבד",html:`
+   <h3>סירופ פשוט (Simple Syrup)</h3>
+   <p>היחס הקלאסי: <strong>1:1 סוכר ומים</strong> — מחממים עד המסה מלאה, מצננים ושומרים בקירור עד שבועיים. גרסת Rich Syrup ביחס 2:1 מתוקה וסמיכה יותר. מכאן קצרה הדרך לסירופים בטעמים: ג'ינג'ר, נענע, דבש (3:1 דבש-מים חמים).</p>
+   <h3>סאוור מיקס ביתי</h3>
+   <p>שוכחים מהבקבוק התעשייתי: מיץ לימון/ליים <strong>טרי</strong> + סירופ פשוט. נוסחת הזהב של משפחת הסאוור: 2 חלקים אלכוהול, 1 חלק חמוץ, 1 חלק מתוק — נקודת פתיחה לאיזון לפי טעם.</p>
+   <h3>קישוט (Garnish)</h3>
+   <p>הקישוט הוא ארומה, לא רק יופי: <strong>טוויסט</strong> — סוחטים את קליפת ההדר מעל הכוס לשחרור השמנים ואז מניחים; פלחים על השפה; מלח/סוכר על השוליים (Rim); ונענע שמונחת גבוה — קרוב לאף.</p>
+   <div class="media-ph"><span>📷</span>כאן תשולב גלריית קישוטים מקצועית</div>`}
+ ],
+ quiz:[
+ {q:"מתי נכון לערבב (Stir) ולא לנעור (Shake)?",o:["כשיש מיץ הדרים במתכון","כשכל הרכיבים אלכוהוליים ושקופים","כשיש חלבון ביצה","כשרוצים משקה קר במיוחד בלבד"],a:1,exp:"ערבוב שומר על צלילות ומרקם משיי — לכן מרטיני, נגרוני ואולד פאשנד מעורבבים. מיצים, ביצה וחלב דורשים ניעור."},
+ {q:"מה פירוש Muddle?",o:["מזיגה בשכבות","כתישה עדינה של רכיבים טריים בתחתית הכוס","סינון כפול","ניעור ללא קרח"],a:1,exp:"כתישה (במאדלר) משחררת שמנים ומיצים מנענע, ליים או פירות — הבסיס של מוחיטו וקייפרינייה. תמיד בעדינות."},
+ {q:"אילו קוקטיילים דורשים Shake & Strain?",o:["כאלה שמכילים רק תזקיקים וורמוט","קוקטיילים עם מיצים, ביצה או רכיבים סמיכים","רק משקאות חמים","משקאות עם סודה"],a:1,exp:"הניעור מאחד רכיבים בצפיפויות שונות — מיצים, סירופים, ביצה וחלב — ולכן מרגריטה, דאקירי וסאוור תמיד נוערים."},
+ {q:"מהי מזיגה חופשית (Free Pouring)?",o:["מזיגה לפי ספירה עם פקק מזיגה, ללא ג'יגר","מזיגה ללא תשלום ללקוח","מזיגת כל הבקבוק לשייקר","מזיגה עם שתי ידיים"],a:0,exp:"Free Pouring היא מזיגה בקצב ספירה תקני (כ-15 מ״ל לספירה) — מהירה, אך דורשת אימון ובדיקות דיוק קבועות."},
+ {q:"מהו היחס בסירופ פשוט (Simple Syrup) קלאסי?",o:["1:3 סוכר-מים","2:1 מים-סוכר בלבד","1:1 סוכר ומים","סוכר בלבד מומס באלכוהול"],a:2,exp:"סירופ פשוט = חלק סוכר על חלק מים, מומס בחימום עדין. גרסת Rich (2:1 סוכר-מים) סמיכה ומתוקה יותר."}
+ ]},
+
+{id:"m4",short:"קוקטיילים",title:"ספר הקוקטיילים הבינלאומי",subtitle:"The IBA Official Cocktails",
+ desc:"הרשימה הרשמית בשלוש קטגוריות: The Unforgettables, Contemporary Classics ו-New Era Drinks — מתכונים מדויקים וסיפורי רקע.",
+ lessons:[
+ {t:"The Unforgettables",sub:"הקלאסיקות שאי אפשר בלעדיהן",html:`
+   <p>קטגוריית הדגל של ה-IBA: קוקטיילים היסטוריים שכל ברמן בעולם נדרש לדעת בעל פה. שימו לב לתבנית שחוזרת — מעט רכיבים, יחסים מדויקים, וטכניקה שנבחרת לפי הרכיבים.</p>
+   {{recipe:negroni}}
+   {{recipe:martini}}
+   {{recipe:oldfashioned}}
+   {{recipe:daiquiri}}
+   {{recipe:whiskeysour}}`},
+ {t:"Contemporary Classics",sub:"הקלאסיקות המודרניות",html:`
+   <p>קוקטיילים מהמחצית השנייה של המאה ה-20 שהפכו לנכסי צאן ברזל — אלו המשקאות המוזמנים ביותר בכל בר בעולם.</p>
+   {{recipe:margarita}}
+   {{recipe:mojito}}
+   {{recipe:cosmopolitan}}
+   {{recipe:espressomartini}}`},
+ {t:"New Era Drinks",sub:"הדור החדש",html:`
+   <p>יצירות מהרנסנס של עולם הקוקטיילים (שנות ה-2000 ואילך) שנכנסו לרשימה הרשמית — סימן לכך שהקאנון ממשיך להתפתח.</p>
+   {{recipe:tommys}}
+   {{recipe:penicillin}}
+   {{recipe:paperplane}}`}
+ ],
+ quiz:[
+ {q:"מהו יחס הרכיבים בנגרוני?",o:["2:1:1 לטובת הג'ין","יחס שווה — 30/30/30 ג'ין, קמפרי וורמוט מתוק","4:1 ג'ין וקמפרי בלבד","3:2:1 ורמוט, ג'ין, קמפרי"],a:1,exp:"נגרוני הוא שיעור באיזון: שליש ג'ין, שליש קמפרי, שליש ורמוט מתוק — נבנה בכוס רוקס על קרח ומעורבב."},
+ {q:"מהו האלכוהול הבסיסי באולד פאשנד?",o:["רום כהה","ברנדי","וויסקי (בורבון או ריי)","ג'ין"],a:2,exp:"אולד פאשנד: וויסקי, קוביית סוכר, ביטרס ומעט מים — ההגדרה ההיסטורית המקורית של 'קוקטייל'."},
+ {q:"לאיזו קטגוריה רשמית של ה-IBA שייך המוחיטו?",o:["The Unforgettables","Contemporary Classics","New Era Drinks","Tropical Drinks"],a:1,exp:"המוחיטו נמנה עם ה-Contemporary Classics — הקלאסיקות המודרניות — לצד המרגריטה והקוסמופוליטן."},
+ {q:"מה מורחים על שולי כוס המרגריטה?",o:["סוכר","קינמון","מלח","פלפל צ'ילי"],a:2,exp:"שולי מלח (Salt Rim) הם חתימת המרגריטה — המלח מאזן את חמיצות הליים ומעצים את טעם הטקילה."},
+ {q:"מהם שלושת רכיבי הדאקירי הקלאסי?",o:["רום לבן, מיץ ליים טרי וסירופ סוכר","רום כהה, לימון וקולה","וודקה, ליים וסודה","רום, נענע וסודה"],a:0,exp:"דאקירי IBA: ‏60 מ״ל רום לבן, 20 מ״ל ליים טרי ו-10 מ״ל סירופ סוכר — ניעור וסינון לכוס קופה צוננת."}
+ ]},
+
+{id:"m5",short:"ניהול",title:"שירות, מכירות וניהול בר",subtitle:"Bar Management",
+ desc:"פסיכולוגיית אירוח, שתייה אחראית, ניהול מלאי, חישוב עלות כוס ותמחור.",
+ lessons:[
+ {t:"פסיכולוגיית אירוח ושירות",sub:"הלקוח לא קונה משקה — הוא קונה חוויה",html:`
+   <h3>שלושת שלבי המפגש</h3>
+   <p><strong>קבלת פנים</strong> — קשר עין וברכה תוך 30 שניות מהתיישבות הלקוח, גם אם אתם עסוקים ("שנייה ואני אצלך" שווה זהב). <strong>ליווי</strong> — קריאת הלקוח: מי רוצה שיחה ומי רוצה שקט, מי מתלבט וזקוק להמלצה. <strong>סגירה</strong> — פרידה אישית שמייצרת לקוח חוזר.</p>
+   <h3>מכירה מקצועית</h3>
+   <p>המלצה טובה מתחילה בשאלה ("חמוץ-רענן או חזק-מרוכז?") ולא ברשימת מלאי. <strong>Upselling</strong> נכון מציע שדרוג שמשרת את הלקוח ("במרגריטה הזו טקילת 100% אגבה עושה הבדל אמיתי") — לעולם לא דחיפה של הפריט היקר ביותר.</p>
+   <div class="media-ph"><span>🎬</span>כאן ישולב סרטון: סימולציית שירות מול לקוח מתלבט</div>`},
+ {t:"שתייה אחראית",sub:"האחריות החוקית והמוסרית של הברמן",html:`
+   <h3>זיהוי סימני שכרות</h3>
+   <p>דיבור מעורפל או רם מהרגיל, איבוד שיווי משקל, תגובות איטיות, שינוי התנהגות חד. ברמן מקצועי עוקב אחרי קצב השתייה של לקוחותיו — לא רק אחרי ההזמנות.</p>
+   <h3>סירוב מקצועי</h3>
+   <p>מסרבים בשקט, בגובה העיניים וללא האשמה: "אני לא יכול למזוג לך עוד הערב — אבל אשמח להביא לך מים או משהו לאכול." מציעים חלופות, מערבים אחראי משמרת בעת הצורך, ומוודאים שהלקוח לא נוהג. <strong>בדיקת תעודה מזהה</strong> לכל מי שנראה צעיר — חובה, לא נימוס. מכירת אלכוהול לקטינים אסורה על פי חוק.</p>
+   <div class="media-ph"><span>📷</span>כאן ישולב תרשים: פרוטוקול סירוב הגשה</div>`},
+ {t:"מלאי, עלות כוס ותמחור",sub:"הצד העסקי של הבר",html:`
+   <h3>ניהול מלאי</h3>
+   <p>עקרון <strong>FIFO — First In, First Out</strong>: הסחורה הישנה נמכרת ראשונה. ספירת מלאי שבועית משווה בין הצריכה בפועל למכירות בקופה — הפער (Variance) חושף שפיכות, מזיגות יתר או חוסרים.</p>
+   <h3>עלות כוס (Pour Cost)</h3>
+   <p>הנוסחה: <strong>עלות הרכיבים ÷ מחיר המכירה × 100</strong>. דוגמה: קוקטייל שרכיביו עולים 9 ₪ ונמכר ב-45 ₪ — עלות הכוס היא 20%. היעד המקובל בענף: 18%–24%. מכאן נגזר התמחור: מחלקים את עלות הרכיבים ביעד העלות הרצוי ומעגלים למחיר תפריט הגיוני.</p>
+   <p>מזיגת יתר של 5 מ״ל לכוס נשמעת זניחה — אבל על אלף כוסות בחודש זה בקבוק שלם שנעלם. הדיוק בג'יגר הוא כסף.</p>
+   <div class="media-ph"><span>📷</span>כאן תשולב מחשבונית: תרגול חישובי Pour Cost</div>`}
+ ],
+ quiz:[
+ {q:"אילו מהבאים הם סימני שכרות מובהקים?",o:["בקשת מים מרובה","דיבור מעורפל ואיבוד שיווי משקל","הזמנת קוקטייל ללא אלכוהול","ישיבה ממושכת בבר"],a:1,exp:"דיבור מעורפל, איבוד שיווי משקל, תגובות איטיות ושינוי התנהגות חד — אלו הסימנים שמחייבים עצירת הגשה."},
+ {q:"איך מחשבים עלות כוס (Pour Cost)?",o:["מחיר המכירה פחות המע\"מ","עלות הרכיבים חלקי מחיר המכירה, כפול 100","מחיר הבקבוק חלקי מספר הכוסות","שכר הברמן חלקי מספר המשקאות"],a:1,exp:"Pour Cost = עלות רכיבים ÷ מחיר מכירה × 100. היעד המקובל בענף: 18%–24%."},
+ {q:"מה משמעות עקרון FIFO בניהול מלאי?",o:["המשקה היקר נמכר ראשון","ראשון נכנס — ראשון יוצא: הסחורה הישנה נמכרת קודם","קונים רק ממלאי קיים","סופרים מלאי פעם בשנה"],a:1,exp:"First In, First Out: מסדרים את המלאי כך שהסחורה הוותיקה נמצאת מקדימה ונצרכת ראשונה — פחות פחת ופגי תוקף."},
+ {q:"לקוח שיכור מבקש עוד משקה. מה הפעולה המקצועית?",o:["למזוג כמות קטנה יותר בשקט","לסרב בנימוס, להציע מים או אוכל ולוודא שאינו נוהג","להתעלם ממנו עד שיתייאש","למזוג רק אם הוא לקוח קבוע"],a:1,exp:"סירוב שקט ומכבד, הצעת חלופות, עדכון אחראי משמרת ווידוא הגעה בטוחה הביתה — זו האחריות החוקית והמוסרית של הברמן."},
+ {q:"מהו Upselling מקצועי?",o:["דחיפת הפריט היקר ביותר בתפריט","הצעת שדרוג שמשרת באמת את הלקוח, בהתאם לטעמו","הוספת חיוב ללא ידיעת הלקוח","הגשת מנה כפולה כברירת מחדל"],a:1,exp:"Upselling נכון יוצא מטעמו של הלקוח ומציע שדרוג רלוונטי (למשל תזקיק פרימיום בקוקטייל שהזמין) — הלקוח מרוויח חוויה, הבר מרוויח הכנסה."}
+ ]}
+];
+
+/* =========================================================
+   סימולטור — נתוני סבבים
+========================================================= */
+
+/* ספריית אייקוני SVG (בסגנון Lucide — קו, currentColor) */
+const _I=p=>`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const ICON={
+ martini:_I('<path d="M4 4h16L12 13v6"/><path d="M8 21h8"/><circle cx="9.5" cy="6.8" r="1.1"/>'),
+ rocks:_I('<path d="M6 4l1.1 16h9.8L18 4"/><path d="M5 4h14"/><rect x="9.4" y="12.4" width="5.2" height="4.6" rx="1"/>'),
+ highball:_I('<path d="M8 3l.7 18h6.6L16 3"/><path d="M7 3h10"/><circle cx="11" cy="9" r=".55"/><circle cx="13.3" cy="12.8" r=".55"/><circle cx="11.3" cy="16.4" r=".55"/>'),
+ coupe:_I('<path d="M4 5h16c0 4.4-3.6 8-8 8s-8-3.6-8-8z"/><path d="M12 13v5"/><path d="M8 21h8"/>'),
+ cubes:_I('<rect x="4" y="8.5" width="7.2" height="7.2" rx="1.6"/><rect x="12.8" y="11.5" width="7.2" height="7.2" rx="1.6"/>'),
+ crushed:_I('<path d="M12 3v18"/><path d="M4.6 7.6l14.8 8.8"/><path d="M19.4 7.6L4.6 16.4"/>'),
+ bigcube:_I('<rect x="5" y="5" width="14" height="14" rx="2.6"/><path d="M8.6 12V9.2a.6.6 0 0 1 .6-.6H12"/>'),
+ noice:_I('<circle cx="12" cy="12" r="8.5"/><path d="M6.2 6.2l11.6 11.6"/>'),
+ spoon:_I('<path d="M12 8.2V21"/><ellipse cx="12" cy="5" rx="2.5" ry="3"/><path d="M10.9 12.2l2.2 1.8M10.9 15.4l2.2 1.8"/>'),
+ shaker:_I('<path d="M9.2 2.5h5.6v2.2H9.2z"/><path d="M8.2 4.7h7.6l1.3 14.6a1.9 1.9 0 0 1-1.9 1.7H8.8a1.9 1.9 0 0 1-1.9-1.7L8.2 4.7z"/><path d="M7.4 9.6h9.2"/>'),
+ stir:_I('<path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M21 3.2v5h-5"/>'),
+ leaf:_I('<path d="M11.5 20.5A7.5 7.5 0 0 1 4 13C4 8 8.6 3.8 15 3c3.4 4.6 5 8.4 5 11a7.5 7.5 0 0 1-8.5 6.5z"/><path d="M4.8 20.5c3-5 7-8 12-9.5"/>'),
+ muddler:_I('<path d="M6.4 21.6l8.2-8.2"/><path d="M14.6 13.4l5.1-6.9a2 2 0 0 0-2.8-2.8l-6.9 5.1"/><path d="M10 8.8l5.2 5.2"/>'),
+ bottle:_I('<path d="M10 2.5h4V6l2 3.4V20a1.8 1.8 0 0 1-1.8 1.8H9.8A1.8 1.8 0 0 1 8 20V9.4L10 6V2.5z"/><path d="M8.6 13.2h6.8"/>'),
+ drop:_I('<path d="M12 3.5s5.5 6.4 5.5 10a5.5 5.5 0 0 1-11 0c0-3.6 5.5-10 5.5-10z"/>'),
+ video:_I('<rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.6l5-3.1v9l-5-3.1z"/>'),
+ camera:_I('<path d="M4 8.5h3.2L9 5.8h6l1.8 2.7H20a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.4" r="3.4"/>'),
+ lock:_I('<rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V7.9a4 4 0 0 1 8 0V11"/>'),
+ citrus:_I('<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17M3.5 12h17M6 6l12 12M18 6L6 18"/>'),
+ sugar:_I('<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9.4 9.4h.01M14.6 14.6h.01M14.6 9.4h.01M9.4 14.6h.01"/>')
+};
+
+const SIM_GLASSES=[{n:"כוס רוקס",ic:ICON.rocks},{n:"כוס הייבול",ic:ICON.highball},{n:"כוס מרטיני",ic:ICON.martini},{n:"כוס קופה",ic:ICON.coupe}];
+const SIM_ICE=[{n:"קוביות קרח",ic:ICON.cubes},{n:"קרח כתוש",ic:ICON.crushed},{n:"קובייה גדולה",ic:ICON.bigcube},{n:"ללא קרח בהגשה",ic:ICON.noice}];
+const SIM_TECH=[{n:"בנייה וערבוב",ic:ICON.spoon},{n:"ניעור וסינון",ic:ICON.shaker},{n:"ערבוב וסינון",ic:ICON.stir},{n:"כתישה ובנייה",ic:ICON.leaf},{n:"כתישה וערבוב",ic:ICON.muddler}];
+const SIM_ROUNDS=[
+ {key:"negroni",glass:"כוס רוקס",ice:"קוביות קרח",tech:"בנייה וערבוב",
+  ings:["ג'ין","קמפרי","ורמוט מתוק"],pool:["ג'ין","קמפרי","ורמוט מתוק","וודקה","מיץ ליים טרי","ורמוט יבש"],
+  pours:[["ג'ין",30,"ml"],["קמפרי",30,"ml"],["ורמוט מתוק",30,"ml"]]},
+ {key:"martini",glass:"כוס מרטיני",ice:"ללא קרח בהגשה",tech:"ערבוב וסינון",
+  ings:["ג'ין","ורמוט יבש"],pool:["ג'ין","ורמוט יבש","וודקה","קמפרי","מיץ ליים טרי","טריפל סק"],
+  pours:[["ג'ין",60,"ml"],["ורמוט יבש",10,"ml"]]},
+ {key:"mojito",glass:"כוס הייבול",ice:"קרח כתוש",tech:"כתישה ובנייה",
+  ings:["רום לבן","מיץ ליים טרי","נענע וסוכר","סודה"],pool:["רום לבן","מיץ ליים טרי","נענע וסוכר","סודה","בורבון","טריפל סק"],
+  pours:[["רום לבן",45,"ml"],["מיץ ליים טרי",20,"ml"],["סוכר",2,"tsp"],["עלי נענע",6,"leaf"]]},
+ {key:"margarita",glass:"כוס קופה",ice:"ללא קרח בהגשה",tech:"ניעור וסינון",
+  ings:["טקילה","טריפל סק","מיץ ליים טרי"],pool:["טקילה","טריפל סק","מיץ ליים טרי","רום לבן","סירופ סוכר","סודה"],
+  pours:[["טקילה",50,"ml"],["טריפל סק",20,"ml"],["מיץ ליים טרי",15,"ml"]]},
+ {key:"oldfashioned",glass:"כוס רוקס",ice:"קובייה גדולה",tech:"כתישה וערבוב",
+  ings:["וויסקי בורבון","קוביית סוכר","אנגוסטורה ביטרס"],pool:["וויסקי בורבון","קוביית סוכר","אנגוסטורה ביטרס","מיץ ליים טרי","קמפרי","סודה"],
+  pours:[["וויסקי בורבון",45,"ml"],["קוביית סוכר",1,"cube"],["אנגוסטורה ביטרס",3,"dash"]]},
+ {key:"daiquiri",glass:"כוס קופה",ice:"ללא קרח בהגשה",tech:"ניעור וסינון",
+  ings:["רום לבן","מיץ ליים טרי","סירופ סוכר"],pool:["רום לבן","מיץ ליים טרי","סירופ סוכר","וודקה","סודה","נענע וסוכר"],
+  pours:[["רום לבן",60,"ml"],["מיץ ליים טרי",20,"ml"],["סירופ סוכר",10,"ml"]]},
+ {key:"whiskeysour",glass:"כוס רוקס",ice:"קוביות קרח",tech:"ניעור וסינון",
+  ings:["וויסקי בורבון","מיץ לימון טרי","סירופ סוכר"],pool:["וויסקי בורבון","מיץ לימון טרי","סירופ סוכר","מיץ ליים טרי","קמפרי","סודה"],
+  pours:[["וויסקי בורבון",45,"ml"],["מיץ לימון טרי",25,"ml"],["סירופ סוכר",20,"ml"]]},
+ {key:"cosmopolitan",glass:"כוס מרטיני",ice:"ללא קרח בהגשה",tech:"ניעור וסינון",
+  ings:["וודקה סיטרון","קואנטרו","מיץ ליים טרי","מיץ חמוציות"],pool:["וודקה סיטרון","קואנטרו","מיץ ליים טרי","מיץ חמוציות","ג'ין","סודה"],
+  pours:[["וודקה סיטרון",40,"ml"],["קואנטרו",15,"ml"],["מיץ ליים טרי",15,"ml"],["מיץ חמוציות",30,"ml"]]},
+ {key:"espressomartini",glass:"כוס מרטיני",ice:"ללא קרח בהגשה",tech:"ניעור וסינון",
+  ings:["וודקה","ליקר קפה","סירופ סוכר","אספרסו טרי"],pool:["וודקה","ליקר קפה","סירופ סוכר","אספרסו טרי","רום לבן","מיץ ליים טרי"],
+  pours:[["וודקה",50,"ml"],["ליקר קפה",30,"ml"],["סירופ סוכר",10,"ml"],["אספרסו טרי",30,"ml"]]},
+ {key:"tommys",glass:"כוס רוקס",ice:"קוביות קרח",tech:"ניעור וסינון",
+  ings:["טקילה 100% אגבה","מיץ ליים טרי","סירופ אגבה"],pool:["טקילה 100% אגבה","מיץ ליים טרי","סירופ אגבה","טריפל סק","סירופ סוכר","סודה"],
+  pours:[["טקילה 100% אגבה",45,"ml"],["מיץ ליים טרי",15,"ml"],["סירופ אגבה",15,"ml"]]},
+ {key:"penicillin",glass:"כוס רוקס",ice:"קובייה גדולה",tech:"ניעור וסינון",
+  ings:["וויסקי סקוץ' בלנדד","מיץ לימון טרי","סירופ דבש-ג'ינג'ר","סקוץ' אילאיי מעושן"],pool:["וויסקי סקוץ' בלנדד","מיץ לימון טרי","סירופ דבש-ג'ינג'ר","סקוץ' אילאיי מעושן","בורבון","סירופ סוכר"],
+  pours:[["וויסקי סקוץ' בלנדד",60,"ml"],["מיץ לימון טרי",22,"ml"],["סירופ דבש-ג'ינג'ר",22,"ml"],["סקוץ' אילאיי מעושן (Float)",7,"ml"]]},
+ {key:"paperplane",glass:"כוס קופה",ice:"ללא קרח בהגשה",tech:"ניעור וסינון",
+  ings:["בורבון","אפרול","אמארו נונינו","מיץ לימון טרי"],pool:["בורבון","אפרול","אמארו נונינו","מיץ לימון טרי","קמפרי","סירופ סוכר"],
+  pours:[["בורבון",22,"ml"],["אפרול",22,"ml"],["אמארו נונינו",22,"ml"],["מיץ לימון טרי",22,"ml"]]}
+];
+
+/* =========================================================
+   שמירת התקדמות (window.storage, עם גיבוי בזיכרון)
+========================================================= */
+const STORE_KEY="bartender-course-v1";
+let state={done:{},scores:{},last:null,simStats:{},simLast:null};
+let memOnly=false;
+async function loadState(){
+  try{
+    if(window.storage){
+      const r=await window.storage.get(STORE_KEY);
+      if(r&&r.value) state=JSON.parse(r.value);
+    }else memOnly=true;
+  }catch(e){/* מפתח לא קיים / שגיאה — מתחילים נקי */}
+}
+async function saveState(){
+  if(memOnly||!window.storage) return;
+  try{ await window.storage.set(STORE_KEY,JSON.stringify(state)); }
+  catch(e){ console.error("storage save failed",e); }
+}
+
+/* =========================================================
+   עזרי ניווט
+========================================================= */
+const $=s=>document.querySelector(s);
+let cur={screen:"dash",mod:0,lesson:0};
+function show(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  $("#scr-"+id).classList.add("active");
+  $("#backBtn").style.display=id==="dash"?"none":"inline-block";
+  window.scrollTo({top:0});
+  cur.screen=id;
+}
+$("#backBtn").addEventListener("click",()=>{
+  if(cur.screen==="lesson"&&cur.recipeView)renderDash();
+  else if(cur.screen==="lesson"||cur.screen==="quiz")openModule(cur.mod);
+  else renderDash();
+});
+$("#brandHome").addEventListener("click",renderDash);
+$("#brandHome").addEventListener("keydown",e=>{if(e.key==="Enter")renderDash();});
+
+/* =========================================================
+   חישובי התקדמות
+========================================================= */
+const passed=m=>(state.scores[m.id]||0)>=80;
+const doneCount=m=>(state.done[m.id]||[]).length;
+function modPct(m){
+  const total=m.lessons.length+1;
+  return Math.round((doneCount(m)+(passed(m)?1:0))/total*100);
+}
+function coursePct(){
+  let d=0,t=0;
+  MODULES.forEach(m=>{t+=m.lessons.length+1;d+=doneCount(m)+(passed(m)?1:0);});
+  return Math.round(d/t*100);
+}
+const unlocked=i=>true; /* כל המודולים והשיעורים פתוחים לניווט חופשי */
+
+/* =========================================================
+   Dashboard — באנר "המשך למידה" + קרוסלות אופקיות
+========================================================= */
+function glassIcon(g){
+  if(g.includes("רוקס"))return ICON.rocks;
+  if(g.includes("הייבול"))return ICON.highball;
+  if(g.includes("מרטיני"))return ICON.martini;
+  return ICON.coupe;
+}
+const HE_CAT={"The Unforgettables":"הקלאסיקות הבלתי-נשכחות","Contemporary Classics":"הקלאסיקות המודרניות","New Era Drinks":"הדור החדש"};
+function renderDash(){
+  /* באנר המשך למידה */
+  let mi=0,li=0;
+  if(state.last){mi=state.last.m;li=Math.min(state.last.l,MODULES[mi].lessons.length-1);}
+  const m=MODULES[mi],pct=coursePct(),mp=modPct(m);
+  $("#hbEyebrow").textContent=state.last?`המשך למידה · הושלמו ${pct}% מהקורס`:"קורס ברמנים בינלאומי · IBA";
+  $("#hbTitle").textContent=state.last?m.lessons[li].t:"מאחורי כל בר גדול עומדת שיטה";
+  $("#hbSub").textContent=state.last
+    ?`מודול ${mi+1} · ${m.title} · שיעור ${li+1} מתוך ${m.lessons.length}`
+    :"חמישה מודולים, על פי הסטנדרט הבינלאומי — מהג'יגר הראשון ועד ניהול הבר.";
+  $("#dashPct").textContent=mp+"%";
+  $("#dashBar").style.width=mp+"%";
+  $("#cbText").textContent=state.last?(pct===100?"צפייה חוזרת":"המשך"):"התחל ללמוד";
+
+  /* קרוסלת מודולים — הבקבוקים החיים */
+  const shelf=$("#shelf");shelf.innerHTML="";
+  MODULES.forEach((mod,i)=>{
+    const p=modPct(mod);
+    const t=document.createElement("button");
+    t.className="mod-tile";
+    t.innerHTML=`
+      <div class="bottle" style="--fill:${p}%"><div class="neck"></div><div class="body"><div class="liquid"></div></div></div>
+      <span class="m-name">מודול ${i+1}<br>${mod.title}</span>
+      <div class="mini-bar"><i style="width:${p}%"></i></div>
+      <span class="m-pct">${p}% הושלמו${passed(mod)?" · מבחן עבר":""}</span>`;
+    t.addEventListener("click",()=>openModule(i));
+    shelf.appendChild(t);
+  });
+
+  /* קרוסלות קוקטיילים לפי קטגוריות IBA */
+  const cats=[];
+  Object.entries(RECIPES).forEach(([k,r])=>{
+    let c=cats.find(x=>x.name===r.cat);
+    if(!c){c={name:r.cat,items:[]};cats.push(c);}
+    c.items.push([k,r]);
+  });
+  $("#cocktailRows").innerHTML=cats.map((c,ci)=>`
+    <div class="row-head"><h2>${HE_CAT[c.name]||c.name} <span class="row-en">${c.name}</span></h2>
+      <div class="row-arrows"><button data-row="crow${ci}" aria-label="גלילה">‹</button><button data-row="crow${ci}" data-dir="1" aria-label="גלילה">›</button></div></div>
+    <div class="hrow" id="crow${ci}">
+      ${c.items.map(([k,r])=>`
+        <button class="rc-tile" data-k="${k}">
+          <span class="t-ic">${glassIcon(r.glass)}</span>
+          <span class="t-name">${r.name}</span>
+          <span class="t-en">${r.en}</span>
+        </button>`).join("")}
+    </div>`).join("");
+  $("#cocktailRows").querySelectorAll(".rc-tile").forEach(t=>t.addEventListener("click",()=>openRecipe(t.dataset.k)));
+  show("dash");
+}
+/* חיצי גלילה לקרוסלות (עכבר) — בטלפון גוללים באצבע */
+document.addEventListener("click",e=>{
+  const a=e.target.closest(".row-arrows button");if(!a)return;
+  const row=document.getElementById(a.dataset.row);if(!row)return;
+  const d=a.dataset.dir?1:-1;
+  row.scrollBy({left:d*row.clientWidth*.8,behavior:"smooth"});
+});
+/* פתיחת מתכון בודד מהקרוסלה */
+function openRecipe(key){
+  cur.recipeView=true;
+  const r=RECIPES[key];
+  $("#lessonBody").innerHTML=`
+    <div class="eyebrow">${HE_CAT[r.cat]||r.cat} · ${r.cat}</div>
+    <h2>${r.name}</h2>
+    ${recipeCard(key)}`;
+  document.querySelector("#scr-lesson .lesson-nav").style.display="none";
+  show("lesson");
+}
+$("#continueBtn").addEventListener("click",()=>{
+  if(state.last)openLesson(state.last.m,Math.min(state.last.l,MODULES[state.last.m].lessons.length-1));
+  else openLesson(0,0);
+});
+$("#simOpenBtn").addEventListener("click",()=>startSim());
+document.addEventListener("click",e=>{
+  const b=e.target.closest(".sim-practice-btn");
+  if(b)startSim(b.dataset.k);
+});
+
+/* =========================================================
+   מסך מודול
+========================================================= */
+function openModule(i){
+  cur.mod=i;
+  const m=MODULES[i];
+  $("#modEyebrow").textContent=`מודול ${i+1} · ${m.subtitle}`;
+  $("#modTitle").textContent=m.title;
+  $("#modDesc").textContent=m.desc;
+  const list=$("#lessonList");list.innerHTML="";
+  m.lessons.forEach((l,j)=>{
+    const d=(state.done[m.id]||[]).includes(j);
+    const el=document.createElement("button");
+    el.className="lesson-item"+(d?" done":"");
+    el.innerHTML=`<span class="check">${d?"✓":""}</span>
+      <span><span class="li-title">${j+1}. ${l.t}</span><br><span class="li-sub">${l.sub}</span></span>`;
+    el.addEventListener("click",()=>openLesson(i,j));
+    list.appendChild(el);
+  });
+  const qDone=passed(m);
+  const q=document.createElement("button");
+  q.className="lesson-item quiz-item"+(qDone?" done":"");
+  q.innerHTML=`<span class="check">${qDone?"✓":"?"}</span>
+    <span><span class="li-title">מבחן המודול</span><br><span class="li-sub">${m.quiz.length} שאלות · ציון עובר 80%</span></span>
+    ${state.scores[m.id]!=null?`<span class="badge-score">${state.scores[m.id]}%</span>`:""}`;
+  q.addEventListener("click",()=>startQuiz(i));
+  list.appendChild(q);
+  show("module");
+}
+
+/* =========================================================
+   שיעור + כרטיסי מתכון
+========================================================= */
+function recipeCard(key){
+  const r=RECIPES[key];
+  const ings=r.ings.map(x=>`<div class="ing-row"><span>${x[0]}</span><span class="amt">${x[1]}</span></div>`).join("");
+  const steps=r.method.map(s=>`<li>${s}</li>`).join("");
+  return `<div class="recipe-card" data-r="${key}">
+    <div class="rc-head"><div class="rc-en">${r.en} · ${r.cat}</div><h4>${r.name}</h4></div>
+    <div class="rc-story">${r.story}</div>
+    <div class="rc-tabs" role="tablist">
+      <button class="rc-tab" aria-selected="true" data-p="0">רכיבים</button>
+      <button class="rc-tab" aria-selected="false" data-p="1">הכנה</button>
+      <button class="rc-tab" aria-selected="false" data-p="2">הגשה</button>
+    </div>
+    <div class="rc-panel active">${ings}</div>
+    <div class="rc-panel"><ol>${steps}</ol></div>
+    <div class="rc-panel">
+      <div class="serve-row"><span class="s-ic">${ICON.coupe}</span><span><span class="s-label">כוס מומלצת</span>${r.glass}</span></div>
+      <div class="serve-row"><span class="s-ic">${ICON.cubes}</span><span><span class="s-label">קרח</span>${r.ice}</span></div>
+      <div class="serve-row"><span class="s-ic">${ICON.citrus}</span><span><span class="s-label">קישוט</span>${r.garnish}</span></div>
+      <div class="serve-row"><span class="s-ic">${ICON.shaker}</span><span><span class="s-label">טכניקה</span>${r.technique}</span></div>
+    </div>
+    ${SIM_ROUNDS.some(x=>x.key===key)?`<div class="rc-practice"><button class="sim-practice-btn" data-k="${key}">${ICON.shaker} תרגלו את ה${r.name} בסימולטור</button></div>`:""}
+  </div>`;
+}
+function openLesson(mi,li){
+  cur.mod=mi;cur.lesson=li;cur.recipeView=false;
+  document.querySelector("#scr-lesson .lesson-nav").style.display="flex";
+  const m=MODULES[mi],l=m.lessons[li];
+  let html=l.html.replace(/\{\{recipe:(\w+)\}\}/g,(_,k)=>recipeCard(k)).replace(/🎬/g,ICON.video).replace(/📷/g,ICON.camera);
+  $("#lessonBody").innerHTML=`
+    <div class="eyebrow">מודול ${mi+1} · שיעור ${li+1} מתוך ${m.lessons.length}</div>
+    <h2>${l.t}</h2>${html}`;
+  $("#lessonDoneBtn").textContent=li<m.lessons.length-1?"סיימתי · לשיעור הבא":"סיימתי · למבחן המודול";
+  state.last={m:mi,l:li};saveState();
+  show("lesson");
+}
+$("#lessonBody").addEventListener("click",e=>{
+  const tab=e.target.closest(".rc-tab");if(!tab)return;
+  const card=tab.closest(".recipe-card");
+  card.querySelectorAll(".rc-tab").forEach(t=>t.setAttribute("aria-selected","false"));
+  tab.setAttribute("aria-selected","true");
+  card.querySelectorAll(".rc-panel").forEach((p,i)=>p.classList.toggle("active",i==tab.dataset.p));
+});
+$("#lessonBackBtn").addEventListener("click",()=>openModule(cur.mod));
+$("#lessonDoneBtn").addEventListener("click",()=>{
+  const m=MODULES[cur.mod];
+  state.done[m.id]=state.done[m.id]||[];
+  if(!state.done[m.id].includes(cur.lesson))state.done[m.id].push(cur.lesson);
+  saveState();
+  if(cur.lesson<m.lessons.length-1)openLesson(cur.mod,cur.lesson+1);
+  else startQuiz(cur.mod);
+});
+
+/* =========================================================
+   מנוע המבחנים
+========================================================= */
+let quiz={mi:0,i:0,correct:0,answers:[]};
+function startQuiz(mi){
+  cur.mod=mi;
+  quiz={mi,i:0,correct:0,answers:[]};
+  $("#quizTitle").textContent=MODULES[mi].title;
+  renderQuestion();
+  show("quiz");
+}
+function renderDots(){
+  const m=MODULES[quiz.mi];
+  $("#qDots").innerHTML=m.quiz.map((_,i)=>{
+    let c="";
+    if(i<quiz.answers.length)c=quiz.answers[i]?"ok":"bad";
+    else if(i===quiz.i)c="now";
+    return `<i class="${c}"></i>`;
+  }).join("");
+}
+function renderQuestion(){
+  const m=MODULES[quiz.mi],q=m.quiz[quiz.i];
+  renderDots();
+  $("#quizArea").innerHTML=`
+    <div class="q-card">
+      <div class="q-text">${quiz.i+1}. ${q.q}</div>
+      ${q.o.map((o,i)=>`<button class="q-opt" data-i="${i}">${o}</button>`).join("")}
+      <div class="q-feedback" id="qFb"></div>
+      <div class="sim-actions"><button class="btn btn-primary" id="qNext" style="display:none;width:100%">
+        ${quiz.i<m.quiz.length-1?"לשאלה הבאה":"לתוצאה"}</button></div>
+    </div>`;
+  document.querySelectorAll(".q-opt").forEach(b=>b.addEventListener("click",()=>answer(+b.dataset.i)));
+}
+function answer(pick){
+  const m=MODULES[quiz.mi],q=m.quiz[quiz.i];
+  const ok=pick===q.a;
+  quiz.answers.push(ok);if(ok)quiz.correct++;
+  document.querySelectorAll(".q-opt").forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.a)b.classList.add("correct");
+    else if(i===pick)b.classList.add("wrong");
+  });
+  const fb=$("#qFb");
+  fb.className="q-feedback show "+(ok?"good":"bad");
+  fb.innerHTML=ok?"✓ תשובה נכונה! "+q.exp:`<b>לא מדויק.</b> ${q.exp}`;
+  renderDots();
+  const next=$("#qNext");next.style.display="block";
+  next.addEventListener("click",()=>{
+    quiz.i++;
+    if(quiz.i<m.quiz.length)renderQuestion();else quizResult();
+  });
+}
+function quizResult(){
+  const m=MODULES[quiz.mi];
+  const score=Math.round(quiz.correct/m.quiz.length*100);
+  const pass=score>=80;
+  if(pass&&score>(state.scores[m.id]||0)){state.scores[m.id]=score;saveState();}
+  else if(!pass&&state.scores[m.id]==null){state.scores[m.id]=score;saveState();}
+  const isLast=quiz.mi===MODULES.length-1;
+  $("#qDots").innerHTML="";
+  $("#quizArea").innerHTML=`
+    <div class="quiz-result">
+      <div class="big ${pass?"pass":"fail"}">${score}%</div>
+      <p>${pass
+        ?(isLast?"כל הכבוד! השלמת את כל הקורס — הבר מחכה לך":"עברת! ציון מקצועי")
+        :"נדרש ציון 80% למעבר. חזרו על השיעורים ונסו שוב — זה חלק מהאימון."}</p>
+      <div class="lesson-nav">
+        ${pass&&!isLast?`<button class="btn btn-primary" id="rNext">למודול הבא</button>`:""}
+        ${!pass?`<button class="btn btn-primary" id="rRetry">נסה שוב</button>`:""}
+        <button class="btn btn-ghost" id="rBack">${pass&&isLast?"חזרה למדף":"לרשימת השיעורים"}</button>
+      </div>
+    </div>`;
+  const n=$("#rNext");if(n)n.addEventListener("click",()=>openModule(quiz.mi+1));
+  const r=$("#rRetry");if(r)r.addEventListener("click",()=>startQuiz(quiz.mi));
+  $("#rBack").addEventListener("click",()=>pass&&isLast?renderDash():openModule(quiz.mi));
+}
+
+/* =========================================================
+   סימולטור הקוקטיילים — 5 שלבים + חזרה מרווחת
+========================================================= */
+let sim={round:null,step:0,score:0,picked:new Set(),pourVals:[],pourLocked:false,timer:null};
+const SIM_STEPS=5;
+
+/* בחירה אדפטיבית: קוקטייל שהצלחתם בו מקבל משקל נמוך (יופיע פחות),
+   קוקטייל שנכשלתם בו מקבל משקל גבוה (יחזור לתרגול) */
+function pickRound(){
+  const stats=state.simStats||{};
+  let pool=SIM_ROUNDS.filter(r=>r.key!==state.simLast);
+  if(!pool.length)pool=SIM_ROUNDS;
+  const w=r=>stats[r.key]!=null?stats[r.key]:1;
+  const total=pool.reduce((a,r)=>a+w(r),0);
+  let t=Math.random()*total;
+  for(const r of pool){t-=w(r);if(t<=0)return r;}
+  return pool[pool.length-1];
+}
+function updateSimStats(key,success,strongFail){
+  state.simStats=state.simStats||{};
+  const cur=state.simStats[key]!=null?state.simStats[key]:1;
+  state.simStats[key]=success?Math.max(.15,+(cur*.5).toFixed(3))
+                             :Math.min(6,+(cur*(strongFail?2:1.6)).toFixed(3));
+  state.simLast=key;
+  saveState();
+}
+
+function startSim(forceKey){
+  const forced=typeof forceKey==="string"?SIM_ROUNDS.find(x=>x.key===forceKey):null;
+  const r=forced||pickRound();
+  sim={round:r,step:0,score:0,picked:new Set(),pourVals:[],pourLocked:false,timer:null};
+  $("#simTargetName").textContent=RECIPES[r.key].name+" · "+RECIPES[r.key].en;
+  renderSimStep();
+  show("sim");
+}
+function simChoiceStep(label,options,correctName){
+  $("#simArea").innerHTML=`
+    <div class="q-card">
+      <div class="sim-step-label">שלב ${sim.step+1} מתוך ${SIM_STEPS} · ${label}</div>
+      <div class="chip-grid">
+        ${options.map(o=>`<button class="chip" data-n="${o.n}"><span class="c-ic">${o.ic}</span>${o.n}</button>`).join("")}
+      </div>
+      <div class="q-feedback" id="sFb"></div>
+      <div class="sim-actions"><button class="btn btn-primary" id="sNext" style="display:none;width:100%">המשך</button></div>
+    </div>`;
+  document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
+    const ok=c.dataset.n===correctName;
+    if(ok)sim.score++;
+    document.querySelectorAll(".chip").forEach(x=>{
+      x.disabled=true;
+      if(x.dataset.n===correctName)x.classList.add("correct");
+      else if(x===c)x.classList.add("wrong");
+    });
+    const fb=$("#sFb");
+    fb.className="q-feedback show "+(ok?"good":"bad");
+    fb.innerHTML=ok?"✓ בדיוק!":`<b>לא הפעם.</b> הבחירה הנכונה: ${correctName}`;
+    const n=$("#sNext");n.style.display="block";
+    n.addEventListener("click",()=>{sim.step++;renderSimStep();});
+  }));
+}
+function simIngredientsStep(){
+  const r=sim.round;
+  $("#simArea").innerHTML=`
+    <div class="q-card">
+      <div class="sim-step-label">שלב ${sim.step+1} מתוך ${SIM_STEPS} · בחרו את כל הרכיבים (${r.ings.length})</div>
+      <div class="chip-grid">
+        ${r.pool.map(n=>`<button class="chip" data-n="${n}">${n}</button>`).join("")}
+      </div>
+      <div class="q-feedback" id="sFb"></div>
+      <div class="sim-actions"><button class="btn btn-primary" id="sPour" style="width:100%">הרכיבים מוכנים</button></div>
+      <p class="sim-note">אפשר ללחוץ שוב על רכיב כדי להסירו</p>
+    </div>`;
+  sim.picked=new Set();
+  document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
+    if(c.disabled)return;
+    const n=c.dataset.n;
+    if(sim.picked.has(n)){sim.picked.delete(n);c.classList.remove("picked");}
+    else{sim.picked.add(n);c.classList.add("picked");}
+  }));
+  $("#sPour").addEventListener("click",()=>{
+    const correct=new Set(r.ings);
+    const exact=sim.picked.size===correct.size&&[...sim.picked].every(x=>correct.has(x));
+    if(exact)sim.score++;
+    document.querySelectorAll(".chip").forEach(x=>{
+      x.disabled=true;
+      const isC=correct.has(x.dataset.n),isP=sim.picked.has(x.dataset.n);
+      if(isC)x.classList.add("correct");
+      else if(isP)x.classList.add("wrong");
+    });
+    const fb=$("#sFb");
+    fb.className="q-feedback show "+(exact?"good":"bad");
+    fb.innerHTML=exact?"✓ סט רכיבים מושלם! עכשיו — למזיגה.":`<b>לא מדויק.</b> הרכיבים הנכונים: ${r.ings.join(", ")}. נתרגל אותם במזיגה.`;
+    const btn=$("#sPour");btn.innerHTML=ICON.bottle+" למדידת הרכיבים";
+    btn.replaceWith(btn.cloneNode(true));
+    $("#sPour").addEventListener("click",()=>{sim.step++;renderSimStep();});
+  });
+}
+
+/* ---------- שלב המדידה מהזיכרון — כל רכיב נמדד, כל אחד ביחידה שלו ---------- */
+const UNITS={
+ ml:{label:"מ״ל",max:90,segs:6,hold:true},
+ tsp:{label:"כפיות",max:4,segs:4,btn:"הוסיפו כפית",ic:"spoon"},
+ leaf:{label:"עלים",max:10,segs:5,btn:"הוסיפו עלה",ic:"leaf"},
+ dash:{label:"טיפות",max:6,segs:6,btn:"טפטפו טיפה",ic:"drop"},
+ cube:{label:"קוביות",max:3,segs:3,btn:"הוסיפו קובייה",ic:"sugar"}
+};
+function simPourStep(){
+  const r=sim.round;
+  sim.pourVals=r.pours.map(()=>0);
+  sim.pourLocked=false;
+  sim.pourAttempts=0;
+  const rows=r.pours.map((p,i)=>{
+    const U=UNITS[p[2]];
+    const nums=Array.from({length:U.segs+1},(_,k)=>Math.round(U.max*k/U.segs));
+    const act=U.hold
+      ?`<button class="hold-btn" data-kind="hold">${ICON.bottle} החזיקו למזיגה</button>`
+      :`<button class="hold-btn" data-kind="add">${ICON[U.ic]} ${U.btn}</button>`;
+    return `
+    <div class="pour-row" data-i="${i}">
+      <div class="pour-top"><span class="p-name">${p[0]} <span class="p-unit">· ${U.label}</span></span><span class="p-cur">0 ${U.label}</span></div>
+      <div class="pour-bar ticks" style="--segs:${U.segs}"><i class="p-fill"></i></div>
+      <div class="p-scale">${nums.map(x=>`<span>${x}</span>`).join("")}</div>
+      <div class="pour-ctrl">
+        <button class="fine" data-d="-1" aria-label="הפחתה">−</button>
+        <button class="fine" data-d="1" aria-label="הוספה">+</button>
+        ${act}
+      </div>
+      <div class="p-verdict"></div>
+    </div>`;
+  }).join("");
+  $("#simArea").innerHTML=`
+    <div class="q-card">
+      <div class="sim-step-label">שלב ${sim.step+1} מתוך ${SIM_STEPS} · מדדו כל רכיב מהזיכרון — הכמויות לא כתובות</div>
+      ${rows}
+      <div class="q-feedback" id="sFb"></div>
+      <div class="sim-actions"><button class="btn btn-primary" id="pDone" style="width:100%">בדיקת מדידה</button></div>
+      <p class="sim-note">נוזלים מוזגים בהחזקת הבקבוק על מד 0–90 מ״ל; סוכר, עלים וטיפות מוסיפים בלחיצה. ממשיכים רק כשכל רכיב מדויק בול — דיוק מהבדיקה הראשונה מזכה בנקודה.</p>
+    </div>`;
+  const updateRow=(i,splash)=>{
+    const U=UNITS[r.pours[i][2]];
+    const row=document.querySelector(`.pour-row[data-i="${i}"]`);
+    row.querySelector(".p-cur").textContent=sim.pourVals[i]+" "+U.label;
+    row.querySelector(".p-fill").style.width=(sim.pourVals[i]/U.max*100)+"%";
+    if(splash){const bar=row.querySelector(".pour-bar");bar.classList.remove("splash");void bar.offsetWidth;bar.classList.add("splash");}
+  };
+  document.querySelectorAll(".pour-row").forEach(row=>{
+    const i=+row.dataset.i,U=UNITS[r.pours[i][2]];
+    const act=row.querySelector(".hold-btn");
+    const stopPour=()=>{if(sim.timer){clearInterval(sim.timer);sim.timer=null;}};
+    if(U.hold){
+      act.addEventListener("pointerdown",e=>{
+        if(sim.pourLocked||row.classList.contains("locked"))return;
+        e.preventDefault();stopPour();
+        sim.timer=setInterval(()=>{sim.pourVals[i]=Math.min(U.max,sim.pourVals[i]+1);updateRow(i);},70);
+      });
+      ["pointerup","pointerleave","pointercancel"].forEach(ev=>act.addEventListener(ev,stopPour));
+    }else{
+      act.addEventListener("click",()=>{
+        if(sim.pourLocked||row.classList.contains("locked"))return;
+        sim.pourVals[i]=Math.min(U.max,sim.pourVals[i]+1);updateRow(i,true);
+      });
+    }
+    row.querySelectorAll(".fine").forEach(b=>b.addEventListener("click",()=>{
+      if(sim.pourLocked||row.classList.contains("locked"))return;
+      sim.pourVals[i]=Math.max(0,Math.min(U.max,sim.pourVals[i]+(+b.dataset.d)));
+      updateRow(i,b.dataset.d==="1");
+    }));
+  });
+  $("#pDone").addEventListener("click",()=>{
+    if(sim.pourLocked)return;
+    if(sim.timer){clearInterval(sim.timer);sim.timer=null;}
+    sim.pourAttempts++;
+    let allExact=true;
+    r.pours.forEach((p,i)=>{
+      const row=document.querySelector(`.pour-row[data-i="${i}"]`);
+      const v=row.querySelector(".p-verdict");
+      const diff=sim.pourVals[i]-p[1];
+      if(diff===0){
+        row.classList.add("locked","exact");
+        v.textContent="✓ כמות מדויקת — הרכיב ננעל";
+        v.className="p-verdict show good";
+      }else{
+        allExact=false;
+        v.textContent=diff>0?"נמדד יותר מדי — הפחיתו":"עדיין חסר — הוסיפו";
+        v.className="p-verdict show bad";
+      }
+    });
+    const fb=$("#sFb");
+    if(allExact){
+      sim.pourLocked=true;
+      if(sim.pourAttempts===1)sim.score++;
+      fb.className="q-feedback show good";
+      fb.innerHTML=sim.pourAttempts===1
+        ?"✓ מדויק בול מהבדיקה הראשונה — זיכרון של ברמן!"
+        :`✓ הגעתם לכמויות המדויקות אחרי ${sim.pourAttempts} בדיקות. הנקודה ניתנת רק על דיוק מהבדיקה הראשונה — המתכון המלא יוצג בסוף לחזרה.`;
+      const btn=$("#pDone");btn.textContent="המשך לשלב הבא";
+      btn.replaceWith(btn.cloneNode(true));
+      $("#pDone").addEventListener("click",()=>{sim.step++;renderSimStep();});
+    }else{
+      fb.className="q-feedback show bad";
+      fb.innerHTML="<b>עוד לא מדויק.</b> תקנו לפי המשוב שליד כל רכיב ובדקו שוב — ממשיכים רק בכמויות המדויקות.";
+    }
+  });
+}
+
+function renderSimStep(){
+  const r=sim.round;
+  if(sim.step===0)simChoiceStep("באיזו כוס נגיש?",SIM_GLASSES,r.glass);
+  else if(sim.step===1)simChoiceStep("איזה קרח?",SIM_ICE,r.ice);
+  else if(sim.step===2)simIngredientsStep();
+  else if(sim.step===3)simPourStep();
+  else if(sim.step===4)simChoiceStep("באיזו טכניקה נכין?",SIM_TECH,r.tech);
+  else simResult();
+}
+function simResult(){
+  const r=sim.round,success=sim.score>=4,strongFail=sim.score<=2;
+  updateSimStats(r.key,success,strongFail);
+  const msg=sim.score===5?"קוקטייל מושלם! הלקוח משאיר טיפ נדיב"
+    :sim.score===4?"כמעט מושלם — עוד סבב ואתם שם"
+    :sim.score===3?"יש בסיס. חזרו למודול 4 ותרגלו שוב"
+    :"הלקוח החזיר את הכוס... זה קורה לכולם בהתחלה";
+  const adapt=success
+    ?`ה${RECIPES[r.key].name} שוּלט — הוא יופיע בתדירות נמוכה יותר, כדי לפנות מקום למה שדורש תרגול.`
+    :`ה${RECIPES[r.key].name} יחזור בקרוב לתרגול נוסף — ככה בונים שליטה.`;
+  $("#simArea").innerHTML=`
+    <div class="quiz-result" style="padding-top:16px">
+      <div class="big ${success?"pass":"fail"}">${sim.score}/5</div>
+      <p>${msg}</p>
+      <p style="font-size:.82rem">${adapt}</p>
+    </div>
+    ${recipeCard(r.key)}
+    <div class="lesson-nav">
+      <button class="btn btn-primary" id="simAgain">${ICON.martini} קוקטייל נוסף</button>
+      <button class="btn btn-ghost" id="simHome">חזרה למדף</button>
+    </div>`;
+  const pb=document.querySelector("#simArea .sim-practice-btn");if(pb)pb.remove();
+  document.querySelector("#simArea .recipe-card").addEventListener("click",e=>{
+    const tab=e.target.closest(".rc-tab");if(!tab)return;
+    const card=tab.closest(".recipe-card");
+    card.querySelectorAll(".rc-tab").forEach(t=>t.setAttribute("aria-selected","false"));
+    tab.setAttribute("aria-selected","true");
+    card.querySelectorAll(".rc-panel").forEach((p,i)=>p.classList.toggle("active",i==tab.dataset.p));
+  });
+  $("#simAgain").addEventListener("click",startSim);
+  $("#simHome").addEventListener("click",renderDash);
+}
+
+/* =========================================================
+   אתחול
+========================================================= */
+(async function init(){
+  await loadState();
+  renderDash();
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+<script>
+/* שכבת אנימציה — עוטפת את הלוגיקה הקיימת בלי לשנות אותה */
+(function(){
+  const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const AMBER=["#7FE58F","#3FAE5F","#F5F4F2","#BBF7D0"];
+  const canFx=!RM&&typeof gsap!=="undefined";
+  const canPop=!RM&&typeof confetti!=="undefined";
+
+  function burst(x,y,n){
+    if(!canPop)return;
+    confetti({particleCount:n||36,spread:65,startVelocity:26,scalar:.8,ticks:120,
+      origin:{x,y},colors:AMBER,disableForReducedMotion:true});
+  }
+  function celebrate(){
+    if(!canPop)return;
+    const end=Date.now()+900;
+    (function frame(){
+      confetti({particleCount:5,angle:60,spread:60,origin:{x:0,y:.7},colors:AMBER});
+      confetti({particleCount:5,angle:120,spread:60,origin:{x:1,y:.7},colors:AMBER});
+      if(Date.now()<end)requestAnimationFrame(frame);
+    })();
+  }
+
+  /* מעברי מסך קולנועיים */
+  if(canFx){
+    const _show=show;
+    show=function(id){
+      _show(id);
+      const scr=document.querySelector("#scr-"+id);
+      gsap.fromTo(scr,{opacity:0,y:16},{opacity:1,y:0,duration:.4,ease:"power2.out"});
+      const kids=scr.querySelectorAll(".hero-banner,.row-head,.hrow,.sim-card,.mod-head,.lesson-item,.q-card,.sim-target,.quiz-head,.recipe-card,.lesson-body");
+      if(kids.length)gsap.from(kids,{opacity:0,y:18,duration:.5,stagger:.06,ease:"power2.out",clearProps:"transform,opacity"});
+    };
+  }
+
+  /* מבחן: קונפטי על תשובה נכונה, רעד על טעות */
+  const _answer=answer;
+  answer=function(pick){
+    const q=MODULES[quiz.mi].quiz[quiz.i],ok=pick===q.a;
+    _answer(pick);
+    if(ok)burst(.5,.55,30);
+    else if(canFx)gsap.fromTo(".q-card",{x:0},{x:9,duration:.055,repeat:5,yoyo:true,ease:"none",clearProps:"x"});
+  };
+
+  /* מעבר מבחן = מטח חגיגי */
+  const _quizResult=quizResult;
+  quizResult=function(){
+    const m=MODULES[quiz.mi];
+    const pass=Math.round(quiz.correct/m.quiz.length*100)>=80;
+    _quizResult();
+    if(pass)celebrate();
+    if(canFx)gsap.from(".quiz-result .big",{scale:.4,opacity:0,duration:.6,ease:"back.out(2)"});
+  };
+
+  /* מסך ביניים ריאליסטי: ניעור/ערבוב/כתישה לפני התוצאה */
+  const _simResult=simResult;
+  function prepOverlay(cb){
+    const tech=(sim.round&&sim.round.tech)||"";
+    const shaking=tech.includes("ניעור");
+    const ic=shaking?ICON.shaker:tech.includes("כתישה")?ICON.muddler:ICON.stir;
+    const txt=shaking?"מנערים היטב...":tech.includes("כתישה")?"כותשים ומרכיבים...":tech.includes("ערבוב")?"מערבבים בעדינות...":"מוזגים...";
+    const ov=document.createElement("div");
+    ov.className="prep-overlay";
+    ov.innerHTML=ic+`<p>${txt}</p>`;
+    document.body.appendChild(ov);
+    gsap.fromTo(ov,{opacity:0},{opacity:1,duration:.22});
+    const svg=ov.querySelector("svg");
+    if(shaking)gsap.to(svg,{rotation:14,duration:.09,yoyo:true,repeat:13,transformOrigin:"50% 85%",ease:"none"});
+    else if(tech.includes("כתישה"))gsap.to(svg,{y:10,duration:.14,yoyo:true,repeat:8,ease:"power1.inOut"});
+    else gsap.to(svg,{rotation:360,duration:1.2,ease:"power1.inOut"});
+    setTimeout(()=>{gsap.to(ov,{opacity:0,duration:.3,onComplete:()=>ov.remove()});cb();},1350);
+  }
+  simResult=function(){
+    const perfect=sim.score===5,good=sim.score>=4;
+    const finish=()=>{
+      _simResult();
+      if(perfect)celebrate();else if(good)burst(.5,.4,50);
+      if(canFx)gsap.from("#simArea .big",{scale:.4,opacity:0,duration:.6,ease:"back.out(2)"});
+    };
+    if(canFx)prepOverlay(finish);else finish();
+  };
+
+  /* מזיגה: זרם נוזל חי בזמן החזקת הבקבוק */
+  document.addEventListener("pointerdown",e=>{
+    const h=e.target.closest(".hold-btn");
+    if(h&&h.dataset.kind==="hold")h.closest(".pour-row").classList.add("pouring");
+  });
+  ["pointerup","pointercancel"].forEach(ev=>document.addEventListener(ev,()=>{
+    document.querySelectorAll(".pour-row.pouring").forEach(r=>r.classList.remove("pouring"));
+  }));
+
+  /* מזיגה מדויקת שנעלה בקבוק — ניצוץ קטן */
+  const obs=new MutationObserver(muts=>{
+    muts.forEach(m=>{
+      if(m.target.classList&&m.target.classList.contains("exact")&&m.attributeName==="class"){
+        const r=m.target.getBoundingClientRect();
+        burst((r.left+r.width/2)/innerWidth,r.top/innerHeight,22);
+      }
+    });
+  });
+  obs.observe(document.body,{attributes:true,subtree:true,attributeFilter:["class"]});
+})();
+</script>
+</body>
+</html>
